@@ -3,7 +3,7 @@
     //Starting values setup
     let input = d.querySelector("input");
     let maxScore = input.value;
-    let playingTo = d.getElementById("playingTo");
+    let playingTo = d.querySelector("h3");
     playingTo.textContent = "Playing to: " + maxScore;
 
     input.addEventListener("change", () => {
