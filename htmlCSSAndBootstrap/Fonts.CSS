@@ -1,0 +1,23 @@
+body {
+	font-size: 10px;
+}
+
+h1 {
+	font-family: Mono display;
+	font-size: 5.0em;
+	text-align: center;
+	text-decoration: line-through;
+}
+
+p {
+	font-family: roboto;
+	font-size: 1.6em;
+	font-weight: normal;
+	line-height: 1.6;
+	text-align: center;
+	text-decoration: underline;
+}
+
+span {
+	font-size: 1.6em;
+}

@@ -1,0 +1,27 @@
+h1 {
+	color: rgba(11,99,150,0.8);
+/*	border-color: purple;
+	border-width: 5px;
+	border-style: solid;*/
+
+	border: 8px dashed blue;
+}
+
+/*width
+color
+style*/
+
+li	{
+	color: green;
+}
+
+h4 {
+	background-color: rgb(255,100,80);
+}
+
+body {
+	background: pink;
+/*	background: url(https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/wood-grain-2-ed-einboden.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;*/
+}

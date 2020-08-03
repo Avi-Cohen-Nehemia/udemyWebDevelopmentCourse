@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forms Exercise</title>
+</head>
+<body>
+
+	<h1>Register</h1>
+
+	<form method="post">
+		<!-- Full Name-->
+		<label for="firstname">First Name:</label>
+		<input type="text" name="firstname" id="firstname" placeholder="First Name" required="">
+
+		<label for="lastname">Last Name:</label>
+		<input type="text" name="lastname" id="lastname" placeholder="Last Name" required="">
+
+		<br>
+		<!--Gender-->
+		<label for="male">Male</label>
+		<input type="radio" name="gender" id="male" value="male">
+
+		<label for="female">Female</label>
+		<input type="radio" name="gender" id="female" value="female">
+
+		<label for="other">Other</label>
+		<input type="radio" name="gender" id="other" value="other">
+
+		<br>
+		<!--Email & Password-->
+		<label for="email">Email:</label>
+		<input type="Email" name="" id="email" placeholder="your email" required="">
+
+		<label for="Password">Password:</label>
+		<input type="Password" name="password" id="Password" placeholder="your password" required="" pattern=".{5,10}" title="Password must be between 5 to 10 characters">
+
+		<br>
+		<!--Birthday-->
+		<label for="">Birthday:
+		<select name="day">
+			<option>Day</option>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+			<option>6</option>
+			<option>7</option>
+		</select>
+		<select name="month">
+			<option>Month</option>
+			<option>January</option>
+			<option>Febuary</option>
+			<option>March</option>
+			<option>April</option>
+		</select>
+		<select name="year">
+			<option>Year</option>
+			<option>1991</option>
+			<option>1990</option>
+			<option>1989</option>
+		</select>
+		</label>
+		<br>
+		<!--Agree & Submit-->
+		<label for="agree">I agree to the terms and conditions</label>
+		<input type="checkbox" name="agree" id="agree" required="">
+		<br>
+		<input type="submit" name="">
+		
+	</form>
+
+</body>
+</html>

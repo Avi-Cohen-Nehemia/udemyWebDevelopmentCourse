@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forms</title>
+</head>
+<body>
+
+	<h1>Login</h1>
+
+<!--Two attributes need to be added when creating a form:
+	1 - "action" - Where the form send data to
+	2 - "method" - what HTTP method (get/post) -->
+
+<!-- 	<form action="http://www.wikipedia.org">
+
+		<label>Username:
+			<input type="text" name="Username" placeholder="Username">
+		</label>
+
+		<label>Password:
+			<input type="password" name="Password" placeholder="Password">
+		</label>
+
+		<input type="submit" name="">
+	</form> -->
+
+
+	<form action="http://www.wikipedia.org">
+
+		<label for="username">Email:</label>
+		<input id="usename" type="Email" name="Username" placeholder="Email" required="">
+
+
+		<label for="password">Password:</label>
+		<input id="password" type="password" name="Password" placeholder="Password" required="">
+
+		<input type="submit" name="">
+	</form>
+
+</body>
+</html>
