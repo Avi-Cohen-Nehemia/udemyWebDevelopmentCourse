@@ -7,11 +7,24 @@
     let playingTo = d.querySelector("h3");
     playingTo.textContent = "Playing to: " + winningScore;
 
+    let startOver = () => {
+        playerOneScore = 0;
+        score1.textContent = playerOneScore;
+
+        playerTwoScore = 0;
+        score2.textContent = playerTwoScore;
+
+        score1.style.background = "white";
+        score2.style.background = "white";
+
+        isGameOver = false;
+    }
+
     input.addEventListener("change", () => {
         winningScore = +input.value;
         playingTo.textContent = "Playing to: " + winningScore;
+        startOver();
     })
-
 
     //player 1 increment logic
     playerOneScore = 0;
@@ -62,16 +75,7 @@
     // reset button
     let reset = d.getElementById("reset");
     reset.addEventListener("click", () => {
-        playerOneScore = 0;
-        score1.textContent = playerOneScore;
-
-        playerTwoScore = 0;
-        score2.textContent = playerTwoScore;
-
-        score1.style.background = "white";
-        score2.style.background = "white";
-
-        isGameOver = false;
+        startOver();
     })
 
 })(document);
