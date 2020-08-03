@@ -6,12 +6,12 @@
 
         //event for once element got hovered over
         items[i].addEventListener("mouseover", () => {
-            items[i].style.color = "green";
+            items[i].classList.add("selected");
         });
         
         //event for once element stpped being hovered over
         items[i].addEventListener("mouseout", () => {
-            items[i].style.color = "black";
+            items[i].classList.remove("selected");
         });
 
         //cross out a job after completion

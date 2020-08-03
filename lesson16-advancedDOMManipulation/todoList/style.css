@@ -1,3 +1,7 @@
 .done {
     text-decoration: line-through;
 }
+
+.selected {
+    color: green;
+}
