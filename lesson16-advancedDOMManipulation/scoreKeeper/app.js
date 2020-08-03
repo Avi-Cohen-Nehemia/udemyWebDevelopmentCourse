@@ -1,8 +1,9 @@
 ((d) => {
 
     //Starting values setup
+    let isGameOver = false;
     let input = d.querySelector("input");
-    let maxScore = input.value;
+    let maxScore = +input.value;
     let playingTo = d.querySelector("h3");
     playingTo.textContent = "Playing to: " + maxScore;
 
@@ -19,17 +20,19 @@
     let increment1 = d.getElementById("increment1")
 
     increment1.addEventListener("click", () => {
-        if (playerOneScore !== maxScore && playerTwoScore !== maxScore) {
+        if (!isGameOver) {
             playerOneScore += 1;
             score1.textContent = playerOneScore;
         }
 
         if (playerOneScore === maxScore) {
             score1.style.background = "green";
+            isGameOver = true;
         }
 
         if (playerTwoScore === maxScore) {
             score2.style.background = "green";
+            isGameOver = true;
         }
     });
 
@@ -40,17 +43,19 @@
     let increment2 = d.getElementById("increment2");
 
     increment2.addEventListener("click", () => {
-        if (playerOneScore !== maxScore && playerTwoScore !== maxScore) {
+        if (!isGameOver) {
             playerTwoScore += 1;
             score2.textContent = playerTwoScore;
         }
 
         if (playerOneScore === maxScore) {
             score1.style.background = "green";
+            isGameOver = true;
         }
 
         if (playerTwoScore === maxScore) {
             score2.style.background = "green";
+            isGameOver = true;
         }
     });
 
@@ -65,6 +70,8 @@
 
         score1.style.background = "white";
         score2.style.background = "white";
+
+        isGameOver = false;
     })
 
 })(document);
