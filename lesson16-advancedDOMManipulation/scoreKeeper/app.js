@@ -3,13 +3,13 @@
     //Starting values setup
     let isGameOver = false;
     let input = d.querySelector("input");
-    let maxScore = +input.value;
+    let winningScore = +input.value;
     let playingTo = d.querySelector("h3");
-    playingTo.textContent = "Playing to: " + maxScore;
+    playingTo.textContent = "Playing to: " + winningScore;
 
     input.addEventListener("change", () => {
-        maxScore = +input.value;
-        playingTo.textContent = "Playing to: " + maxScore;
+        winningScore = +input.value;
+        playingTo.textContent = "Playing to: " + winningScore;
     })
 
 
@@ -25,12 +25,12 @@
             score1.textContent = playerOneScore;
         }
 
-        if (playerOneScore === maxScore) {
+        if (playerOneScore === winningScore) {
             score1.style.background = "green";
             isGameOver = true;
         }
 
-        if (playerTwoScore === maxScore) {
+        if (playerTwoScore === winningScore) {
             score2.style.background = "green";
             isGameOver = true;
         }
@@ -48,12 +48,12 @@
             score2.textContent = playerTwoScore;
         }
 
-        if (playerOneScore === maxScore) {
+        if (playerOneScore === winningScore) {
             score1.style.background = "green";
             isGameOver = true;
         }
 
-        if (playerTwoScore === maxScore) {
+        if (playerTwoScore === winningScore) {
             score2.style.background = "green";
             isGameOver = true;
         }
