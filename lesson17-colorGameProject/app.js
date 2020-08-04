@@ -99,6 +99,8 @@
         easyBtn.classList.add("selected");
         hardBtn.classList.remove("selected");
         message.textContent = "";
+        reset.textContent = "New Colors";
+        header.style.backgroundColor = "steelblue";
 
         numSquares = 3;
         colors = generateRandomColors(numSquares);
@@ -118,6 +120,8 @@
         hardBtn.classList.add("selected");
         easyBtn.classList.remove("selected");
         message.textContent = "";
+        reset.textContent = "New Colors";
+        header.style.backgroundColor = "steelblue";
 
         numSquares = 6;
         colors = generateRandomColors(numSquares);
