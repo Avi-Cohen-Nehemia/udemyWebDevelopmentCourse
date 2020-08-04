@@ -1,5 +1,7 @@
 body {
     background-color: #232323;
+    margin: 0;
+    font-family: "Montserrat", "Avenir";
 }
 
 .container {
@@ -19,7 +21,16 @@ body {
 h1 {
     color: white;
     text-align: center;
+    font-weight: normal;
+    text-transform: uppercase;
     background-color: steelblue;
+    line-height: 1.1;
+    padding: 1.2rem 0;
+    margin: 0;
+}
+
+#colorDisplay {
+    font-size: 200%;
 }
 
 #stripe {
