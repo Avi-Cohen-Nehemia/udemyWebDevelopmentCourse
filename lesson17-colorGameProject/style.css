@@ -18,6 +18,8 @@ body {
 
 h1 {
     color: white;
+    text-align: center;
+    background-color: steelblue;
 }
 
 #stripe {
@@ -26,4 +28,8 @@ h1 {
     text-align: center;
     display: flex;
     justify-content: space-around;
+}
+
+.selected {
+    background-color: blue;
 }
