@@ -69,28 +69,7 @@
     let colorDisplay = d.getElementById("colorDisplay");
     colorDisplay.textContent = pickedColor;
 
-    // reset button functionality
-    resetBtn.addEventListener("click",() => {
-        // generate new random colors array
-        colors = generateRandomColors(numSquares);
-
-        // pick a new correct answer
-        pickedColor = pickColor();
-
-        // display new correct answer
-        colorDisplay.textContent = pickedColor;
-
-        // change the squares to reflect the new colors
-        for (let i = 0; i < squares.length; i += 1) {
-            squares[i].style.backgroundColor = colors[i];
-        }
-
-        // reset the header's color and texts
-        header.style.backgroundColor = "steelblue";
-        message.textContent = "";
-        resetBtn.textContent = "New Colors";
-    });
-
+    // reset game and values
     let reset = () => {
         // generate new random colors array
         colors = generateRandomColors(numSquares);
@@ -116,6 +95,11 @@
         message.textContent = "";
         resetBtn.textContent = "New Colors";
     }
+
+    // reset button
+    resetBtn.addEventListener("click",() => {
+        reset();
+    });
 
     // difficulty buttons
     let modeButtons = d.querySelectorAll(".mode");
