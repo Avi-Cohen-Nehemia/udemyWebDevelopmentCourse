@@ -98,6 +98,7 @@
     easyBtn.addEventListener("click", () => {
         easyBtn.classList.add("selected");
         hardBtn.classList.remove("selected");
+        message.textContent = "";
 
         numSquares = 3;
         colors = generateRandomColors(numSquares);
@@ -116,6 +117,7 @@
     hardBtn.addEventListener("click", () => {
         hardBtn.classList.add("selected");
         easyBtn.classList.remove("selected");
+        message.textContent = "";
 
         numSquares = 6;
         colors = generateRandomColors(numSquares);
