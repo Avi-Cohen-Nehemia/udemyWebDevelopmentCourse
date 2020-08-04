@@ -30,8 +30,10 @@
         }
     }
 
-    // add initial colors to the squares
+    // add initial colors to the squares and give them click event
     let header = d.querySelector("h1");
+    let message = d.getElementById("message");
+    let reset = d.getElementById("reset");
 
     for (let i = 0; i < squares.length; i += 1) {
         squares[i].style.backgroundColor = colors[i];     
@@ -46,9 +48,10 @@
                 message.textContent = "Correct!";
                 changeColors(clickedColor);
                 header.style.backgroundColor = clickedColor;
+                reset.textContent = "Play Again?"
             } else {
                 squares[i].style.backgroundColor = "#232323";
-                message.textContent = "Try again!";
+                message.textContent = "Try Again";
             }
         })
     }
@@ -64,6 +67,28 @@
     let colorDisplay = d.getElementById("colorDisplay");
     colorDisplay.textContent = pickedColor;
 
-    let message = d.getElementById("message");
+    
+
+    // reset button functionality
+    reset.addEventListener("click",() => {
+        // generate new random colors array
+        colors = generateRandomColors(6);
+
+        // pick a new correct answer
+        pickedColor = pickColor();
+
+        // display new correct answer
+        colorDisplay.textContent = pickedColor;
+
+        // change the squares to reflect the new colors
+        for (let i = 0; i < squares.length; i += 1) {
+            squares[i].style.backgroundColor = colors[i];
+        }
+
+        // reset the header's color and texts
+        header.style.backgroundColor = "#232323";
+        message.textContent = "";
+        reset.textContent = "New Colors";
+    })
 
 })(document);
