@@ -31,4 +31,8 @@
         }
     });
 
+    $(".fa-plus").on("click", function() {
+        $("input[type='text']").fadeToggle(500);
+    });
+
 })(document);
