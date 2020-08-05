@@ -8,6 +8,10 @@ h1 {
     text-align: center;
 }
 
+li {
+    cursor: pointer;
+}
+
 .completed {
     color: gray;
     text-decoration: line-through;
