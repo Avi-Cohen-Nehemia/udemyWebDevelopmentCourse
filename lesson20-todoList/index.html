@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>ToDo List App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <script defer src="assets/js/jQuery.js"></script>
     <script defer src="assets/js/app.js"></script>
@@ -9,11 +10,11 @@
 <body>
     <main id="container">
         <h1>To-Do List</h1>
-        <input type="text"/>
-        <ul>
-            <li>Clean <span class="delete">X</span></li>
-            <li>Sleep <span class="delete">X</span></li>
-            <li>Study <span class="delete">X</span></li>
+        <input type="text" placeholder="Add New ToDo"/>
+        <ul class="list">
+            <li>Clean <span class="removeItem">X</span></li>
+            <li>Sleep <span class="removeItem">X</span></li>
+            <li>Study <span class="removeItem">X</span></li>
         </ul>
     </main>
 </body>
