@@ -3,3 +3,12 @@
     width: 360px;
     margin: 0 auto;
 }
+
+h1 {
+    text-align: center;
+}
+
+.completed {
+    color: gray;
+    text-decoration: line-through;
+}
