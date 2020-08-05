@@ -25,9 +25,7 @@
             // save the text value
             let itemText = $(this).val();
             // append a new li with the value above
-            $(".list").append("<li>"+itemText+" <span>X</span></li>");
-            // add the class removeItem to the span
-            $(".list li span").last().addClass("removeItem");
+            $(".list").append("<li>"+itemText+" <span class='removeItem'><i class='fa fa-trash-alt'></i></span></li>");
             // clear the input
             $(this).val("");
         }
