@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patatap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script defer src="assets/js/jQuery.js"></script>
+    <script defer type="text/javascript" src="assets/js/paperjs/dist/paper-full.js"></script>
+    <script defer type="text/paperscript" canvas="canvas">
+
+        var circles = [];
+
+        function onKeyDown(event) {
+            var maxPoint = new Point(view.size.width, view.size.height);
+            var randomPoint = Point.random();
+            var point = maxPoint * randomPoint;
+            var newCircle = new Path.Circle(point, 300);
+            newCircle.fillColor = "orange";
+
+            circles.push(newCircle);
+        }
+
+        function onFrame(event) {
+            for(var i = 0; i < circles.length; i += 1){
+                circles[i].fillColor.hue += 1;
+                circles[i].scale(0.93);
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+</html>
