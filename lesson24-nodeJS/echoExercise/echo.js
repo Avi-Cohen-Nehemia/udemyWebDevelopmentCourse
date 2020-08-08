@@ -1,6 +1,8 @@
 let echo = (str, num) => {
-    for (let i = 1; i <= num; i += 1) {
+    let i = 1;
+    while (i <= num) {
         console.log(str);
+        i += 1;
     }
 }
 
