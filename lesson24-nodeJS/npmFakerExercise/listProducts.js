@@ -6,5 +6,5 @@ for (let i = 1; i <= 10; i += 1) {
     let product = faker.commerce.productName();
     let price = faker.commerce.price();
 
-    console.log(product + ", " + price);
+    console.log(product + " - $" + price);
 }
