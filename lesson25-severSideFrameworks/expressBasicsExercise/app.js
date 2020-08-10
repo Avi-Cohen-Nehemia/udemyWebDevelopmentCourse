@@ -19,7 +19,7 @@ app.get("/speak/:animal", (req, res) => {
     // storing the animal parameter and making sure it is lower case
     let animal = req.params.animal.toLowerCase();
 
-    res.send(`The ${animal} says ${sounds[animal]}`);
+    res.send(`The ${animal} says "${sounds[animal]}"`);
 });
 
 // repeat a message a number of times
