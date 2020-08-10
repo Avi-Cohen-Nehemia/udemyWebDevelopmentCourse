@@ -8,17 +8,18 @@ app.get("/", (req, res) => {
 
 // customize animals and the sounds they make
 app.get("/speak/:animal", (req, res) => {
-    let animals = {
-            pig: "Oink",
-            cow: "Moo",
-            dog: "Woof Woof",
-            cat: "Meow",
-            bird: "tweet"
-        }
+    let sounds = {
+        pig: "Oink",
+        cow: "Moo",
+        dog: "Woof Woof",
+        cat: "Meow",
+        bird: "tweet"
+    }
 
-    let chosenAnimal = req.params.animal;
+    // storing the animal parameter and making sure it is lower case
+    let animal = req.params.animal.toLowerCase();
 
-    res.send("The " + chosenAnimal + " says " + animals[chosenAnimal]);
+    res.send(`The ${animal} says ${sounds[animal]}`);
 });
 
 // repeat a message a number of times
