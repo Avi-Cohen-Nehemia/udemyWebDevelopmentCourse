@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
+
+// install and tell express use body parser to make use of posted values
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.set("view engine", "ejs");
 
 let friends = ["Tony", "Miranda", "Justin", "Pierre", "Lilly"];
