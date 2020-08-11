@@ -1,0 +1,9 @@
+<h1>Friends list goes here</h1>
+<% friends.map(friend => { %>
+    <li><%= friend %> </li>
+<% }) %>
+
+<form action="/addFriend" method="POST">
+    <input type="text" placeholder="name" name="newFriend">
+    <button type="submit">I made a new friend</button>
+</form>
