@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="app.css">
-
-<h1>you fell in love with: <%= something %></h1>
-<% if (something.toLowerCase() === "zoe") { %>
-    <p>GOOD CHOICE! Zoe is the best!</p>
-<% } else { %>
-    <p>BAD CHOICE! you should have said Zoe!</p>
-<% } %>
-<p>P.S. this is the love.ejs file</p>
+<%- include("partials/header") %>
+    <h1>you fell in love with: <%= something %></h1>
+        <% if (something.toLowerCase() === "zoe") { %>
+            <p>GOOD CHOICE! Zoe is the best!</p>
+        <% } else { %>
+            <p>BAD CHOICE! you should have said Zoe!</p>
+        <% } %>
+    <p>P.S. this is the love.ejs file</p>
+<%- include("partials/footer") %>
