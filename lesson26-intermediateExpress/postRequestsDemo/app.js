@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-// install and tell express use body parser to make use of posted values
+// install and tell express to use "body-parser" to be able to access posted values
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
