@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+// tell express to use this directory
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
     res.render("home.ejs");
@@ -23,3 +25,5 @@ app.get("/posts", (req, res) => {
 app.listen(3000, () => {
     console.log("Server started on port 3000");
 });
+
+// <%- include("partials/header") %>
