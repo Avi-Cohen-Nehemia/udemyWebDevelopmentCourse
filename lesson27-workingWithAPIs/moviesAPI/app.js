@@ -1,32 +1,22 @@
 const express = require("express");
 const app = express();
 const axios = require('axios');
-
-// install and tell express to use "body-parser" to be able to access posted values
-// const bodyParser = require("body-parser");
-// app.use(bodyParser.urlencoded({extended: true}));
-
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-    res.send("welcome to the movie app");
+    res.render("search");
 });
 
 app.get("/results", (req, res) => {
-    axios.get("http://www.omdbapi.com/?s=israel&apikey=thewdb")
+    // saving the form input into a variable
+    let searchedTerm = req.query.search;
+    axios.get(`http://www.omdbapi.com/?s=${searchedTerm}&apikey=thewdb`)
     .then((data) => {
-        console.log(data.data.Search[2].Title);
+        let response = data.data.Search;
+        res.render("results", {response: response});
     });
-});
-
-app.post("/addFriend", (req, res) => {
-    let newFriend = req.body.newFriend;
-    friends.push(newFriend);
-    res.redirect("friends");
 });
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");
 });
-
-// "http://www.omdbapi.com/?s=" + query + "&apikey=thewdb"
