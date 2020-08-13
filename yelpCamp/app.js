@@ -1,7 +1,10 @@
 // import packages
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const axios = require('axios');
+// tell express to use body parser
+app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
 app.set("view engine", "ejs");
 
@@ -27,6 +30,13 @@ app.get("/campgrounds", (req, res) => {
         },
     ];
     res.render("campgrounds", {campgrounds: campgrounds});
+});
+
+// route for creating a new campground
+app.post("/campgrounds", (req, res) => {
+    // get data from the form
+    // add the new campground to the campgrounds array
+    // redirect to the campgrounds page
 });
 
 // set a port for the server to start on
