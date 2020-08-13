@@ -26,7 +26,7 @@ app.get("/campgrounds", (req, res) => {
             image: "https://images.unsplash.com/photo-1506535995048-638aa1b62b77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
         },
     ];
-    res.render("campgrounds");
+    res.render("campgrounds", {campgrounds: campgrounds});
 });
 
 // set a port for the server to start on
