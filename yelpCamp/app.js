@@ -8,9 +8,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
 app.set("view engine", "ejs");
 
-// home/landing page
-app.get("/", (req, res) => {
-    res.render("home");
+// route for creating a new campground
+app.get("/campgrounds/new", (req, res) => {
+    res.render("newCampground");
 });
 
 // route for showing all campground
@@ -30,6 +30,11 @@ app.get("/campgrounds", (req, res) => {
         },
     ];
     res.render("campgrounds", {campgrounds: campgrounds});
+});
+
+// home/landing page
+app.get("/", (req, res) => {
+    res.render("home");
 });
 
 // route for creating a new campground
