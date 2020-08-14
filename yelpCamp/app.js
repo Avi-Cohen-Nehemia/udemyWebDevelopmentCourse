@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const axios = require('axios');
+const mongoose = require("mongoose");
+require("dotenv/config");
 // tell express to use body parser
 app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
@@ -76,6 +78,12 @@ app.post("/campgrounds", (req, res) => {
     // redirect to the campgrounds page
     res.redirect("/campgrounds");
 });
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect(process.env.DB_CONNECTION)
+    .then(() => console.log('Connected to DB!'))
+	.catch(error => console.log(error.message));
 
 // set a port for the server to start on
 app.listen(3000, () => {
