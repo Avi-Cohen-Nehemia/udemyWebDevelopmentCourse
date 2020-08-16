@@ -5,19 +5,25 @@
 
     <form action="/campgrounds" method="POST" class="form-group">
         <div class="row">
-            <div class="form-group col-md-6 ml-auto mr-auto">
+            <div class="form-group col-md-6 mx-auto">
                 <label for="name">Campground Name</label>
                 <input type="text" placeholder="name" name="name" class="form-control">
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6 ml-auto mr-auto">
+            <div class="form-group col-md-6 mx-auto">
                 <label for="image">Image URL</label>
                 <input type="text" placeholder="image url" name="image" class="form-control">
             </div>
         </div>
+		<div class="row">
+            <div class="form-group col-md-6 mx-auto">
+                <label for="image">Description</label>
+                <input type="textarea" placeholder="description" name="description" class="form-control" rows="3" >
+            </div>
+        </div>
         <div class="row">
-            <div class="form-group col-md-6 ml-auto mr-auto">
+            <div class="form-group col-md-6 mx-auto">
                 <button type="submit" class="btn btn-lg btn-success btn-block">Submit</button>
             </div>
         </div>
