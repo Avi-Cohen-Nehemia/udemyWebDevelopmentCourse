@@ -12,6 +12,16 @@ mongoose.connect('mongodb://localhost:27017/restful_blog')
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
+const blogSchema = new mongoose.Schema({
+    title: String,
+    image: String,
+    body: String,
+    created: {
+        type: Date,
+        default: Date.now,
+    }
+});
+
 app.listen(3000, () => {
     console.log("Restful Blog app started on port 3000");
 });
