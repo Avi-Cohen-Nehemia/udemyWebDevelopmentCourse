@@ -41,6 +41,16 @@ app.get("/blogs", (req, res) => {
 app.get("/blogs/new", (req, res) => {
     res.render("new");
 });
+// CREATE route
+app.post("/blogs", (req, res) => {
+    Blog.create(req.body.blog, (error, newBlog) => {
+        if (error) {
+            res.render("new");
+        } else {
+            res.redirect("/blogs");
+        }
+    });
+});
 
 const Blog = mongoose.model("Blog", blogSchema);
 
