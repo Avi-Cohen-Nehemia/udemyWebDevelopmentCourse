@@ -38,7 +38,7 @@ app.get("/blogs", (req, res) => {
     });
 });
 // NEW route
-app.get("blogs/new", (req, res) => {
+app.get("/blogs/new", (req, res) => {
     res.render("new");
 });
 
