@@ -1,3 +1,6 @@
+// =========================
+//          SETUP
+// =========================
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -22,11 +25,16 @@ const blogSchema = new mongoose.Schema({
         default: Date.now,
     }
 });
+const Blog = mongoose.model("Blog", blogSchema);
 
-// ROUTES
+// =========================
+//          ROUTES
+// =========================
+// HOME route
 app.get("/", (req, res) => {
 	res.redirect("/blogs");
 });
+
 // INDEX route
 app.get("/blogs", (req, res) => {
     Blog.find({}, (error, blogs) =>{
@@ -37,10 +45,12 @@ app.get("/blogs", (req, res) => {
         }
     });
 });
+
 // NEW route
 app.get("/blogs/new", (req, res) => {
     res.render("new");
 });
+
 // CREATE route
 app.post("/blogs", (req, res) => {
     Blog.create(req.body.blog, (error, newBlog) => {
@@ -51,9 +61,9 @@ app.post("/blogs", (req, res) => {
         }
     });
 });
+
 // SHOW route
 app.get("/blogs/:id", (req, res) => {
-    // find the blog post with provided id
 	Blog.findById(req.params.id, (error, foundBlog) => {
 		if(error) {
 			res.redirect("/blogs");
@@ -63,7 +73,27 @@ app.get("/blogs/:id", (req, res) => {
 	});
 });
 
-const Blog = mongoose.model("Blog", blogSchema);
+// EDIT route
+app.get("/blogs/:id/edit", (req, res) => {
+	Blog.findById(req.params.id, (error, foundBlog) => {
+		if(error) {
+			res.redirect("/blogs");
+		} else {
+			res.render("edit", {blog: foundBlog});
+		}
+	});
+});
+
+// UPDATE route
+app.put("/blogs/:id", (req, res) => {
+	Blog.findById(req.params.id, (error, foundBlog) => {
+		if(error) {
+			res.redirect("/blogs");
+		} else {
+			res.render("edit", {blog: foundBlog});
+		}
+	});
+});
 
 app.listen(3000, () => {
     console.log("Restful Blog app started on port 3000");
