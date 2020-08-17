@@ -22,6 +22,8 @@ const blogSchema = new mongoose.Schema({
     }
 });
 
+const Blog = mongoose.model("Blog", blogSchema);
+
 app.listen(3000, () => {
     console.log("Restful Blog app started on port 3000");
 });
