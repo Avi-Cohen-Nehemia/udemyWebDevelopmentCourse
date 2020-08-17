@@ -28,7 +28,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/blogs", (req, res) => {
-	res.render("index");
+    Blog.find({}, (error, blogs) =>{
+        if (error) {
+            console.log("error!")
+        } else {
+            res.render("index", {blogs: blogs});
+        }
+    });
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
