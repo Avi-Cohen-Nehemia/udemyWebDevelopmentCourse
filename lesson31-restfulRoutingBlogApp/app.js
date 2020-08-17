@@ -51,6 +51,17 @@ app.post("/blogs", (req, res) => {
         }
     });
 });
+// SHOW route
+app.get("/blogs/:id", (req, res) => {
+    // find the blog post with provided id
+	Blog.findById(req.params.id, (error, foundBlog) => {
+		if(error) {
+			console.log(error);
+		} else {
+			res.render("show", {campgrblogound: foundBlog});
+		}
+	});
+});
 
 const Blog = mongoose.model("Blog", blogSchema);
 
