@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
+mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect('mongodb://localhost:27017/restful_blog')
@@ -99,7 +100,7 @@ app.put("/blogs/:id", (req, res) => {
 
 // DESTROY route
 app.delete("/blogs/:id", (req, res) => {
-	Blog.findByIdAndUpdate(req.params.id, req.body.blog, (error, updatedBlog) => {
+	Blog.findByIdAndRemove(req.params.id, (error) => {
 		if(error) {
 			console.log(error);
 		} else {
