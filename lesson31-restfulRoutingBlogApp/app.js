@@ -56,9 +56,9 @@ app.get("/blogs/:id", (req, res) => {
     // find the blog post with provided id
 	Blog.findById(req.params.id, (error, foundBlog) => {
 		if(error) {
-			console.log(error);
+			res.redirect("/blogs");
 		} else {
-			res.render("show", {campgrblogound: foundBlog});
+			res.render("show", {blog: foundBlog});
 		}
 	});
 });
