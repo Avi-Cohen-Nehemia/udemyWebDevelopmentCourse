@@ -22,6 +22,15 @@ const blogSchema = new mongoose.Schema({
     }
 });
 
+//ROUTES
+app.get("/", (req, res) => {
+	res.redirect("/blogs");
+});
+
+app.get("/blogs", (req, res) => {
+	res.render("index");
+});
+
 const Blog = mongoose.model("Blog", blogSchema);
 
 app.listen(3000, () => {
