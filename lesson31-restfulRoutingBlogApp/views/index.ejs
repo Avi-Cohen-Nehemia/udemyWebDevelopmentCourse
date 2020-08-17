@@ -1,0 +1,10 @@
+<h1>Index Page!!!</h1>
+
+<% blogs.map(blog => { %>
+    <div>
+        <h2><%= blog.title %></h2>
+        <img src="<%= blog.image %>" alt="blog post photo">
+        <span><%= blog.created %></span>
+        <p><%= blog.body %> </p>
+    </div>
+<% }) %>
