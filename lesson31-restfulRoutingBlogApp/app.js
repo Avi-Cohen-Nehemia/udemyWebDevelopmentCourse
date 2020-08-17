@@ -23,11 +23,11 @@ const blogSchema = new mongoose.Schema({
     }
 });
 
-//ROUTES
+// ROUTES
 app.get("/", (req, res) => {
 	res.redirect("/blogs");
 });
-
+// INDEX route
 app.get("/blogs", (req, res) => {
     Blog.find({}, (error, blogs) =>{
         if (error) {
@@ -36,6 +36,10 @@ app.get("/blogs", (req, res) => {
             res.render("index", {blogs: blogs});
         }
     });
+});
+// NEW route
+app.get("blogs/new", (req, res) => {
+    res.render("new");
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
