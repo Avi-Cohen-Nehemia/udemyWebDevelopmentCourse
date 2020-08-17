@@ -58,6 +58,7 @@ app.get("/blogs/new", (req, res) => {
 
 // CREATE route
 app.post("/blogs", (req, res) => {
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.create(req.body.blog, (error, newBlog) => {
         if (error) {
             res.render("new");
@@ -91,6 +92,7 @@ app.get("/blogs/:id/edit", (req, res) => {
 
 // UPDATE route
 app.put("/blogs/:id", (req, res) => {
+    req.body.blog.body = req.sanitize(req.body.blog.body);
 	Blog.findByIdAndUpdate(req.params.id, req.body.blog, (error, updatedBlog) => {
 		if(error) {
 			res.redirect("/blogs");
