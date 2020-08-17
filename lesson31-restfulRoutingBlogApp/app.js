@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -12,9 +13,10 @@ mongoose.connect('mongodb://localhost:27017/restful_blog')
 	.then(() => console.log('Connected to DB!'))
     .catch(error => console.log(error.message));
 
-app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
 const blogSchema = new mongoose.Schema({
     title: String,
@@ -86,11 +88,11 @@ app.get("/blogs/:id/edit", (req, res) => {
 
 // UPDATE route
 app.put("/blogs/:id", (req, res) => {
-	Blog.findById(req.params.id, (error, foundBlog) => {
+	Blog.findByIdAndUpdate(req.params.id, req.body.blog, (error, updatedBlog) => {
 		if(error) {
 			res.redirect("/blogs");
 		} else {
-			res.render("edit", {blog: foundBlog});
+			res.redirect(`/blogs/${req.params.id}`);
 		}
 	});
 });
