@@ -97,6 +97,17 @@ app.put("/blogs/:id", (req, res) => {
 	});
 });
 
+// DESTROY route
+app.delete("/blogs/:id", (req, res) => {
+	Blog.findByIdAndUpdate(req.params.id, req.body.blog, (error, updatedBlog) => {
+		if(error) {
+			console.log(error);
+		} else {
+			res.redirect("/blogs");
+		}
+	});
+});
+
 app.listen(3000, () => {
     console.log("Restful Blog app started on port 3000");
 });
