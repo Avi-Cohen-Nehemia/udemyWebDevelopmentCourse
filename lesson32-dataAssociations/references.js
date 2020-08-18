@@ -26,24 +26,36 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", userSchema);
 
-Post.create({
-	title: "How to cook the best burger",
-	content: "It's really easy!!",
-}, (error, post) => {
-	User.findOne({name: "Bob Belcher"}, (error, foundUser) => {
-		if(error) {
-			console.log(error);
-		} else {
-			foundUser.posts.push(post);
-			foundUser.save((error, data) => {
-				if(error) {
-					console.log(error);
-				} else {
-					console.log(data);
-				}
-			});
-		}
-	});
+// create a new post
+// Post.create({
+// 	title: "How to cook the best burger",
+// 	content: "It's really easy!!",
+// }, (error, post) => {
+// 	// find a specific user
+// 	User.findOne({name: "Bob Belcher"}, (error, foundUser) => {
+// 		if(error) {
+// 			console.log(error);
+// 		} else {
+// 			// add and save the post to that user
+// 			foundUser.posts.push(post);
+// 			foundUser.save((error, data) => {
+// 				if(error) {
+// 					console.log(error);
+// 				} else {
+// 					console.log(data);
+// 				}
+// 			});
+// 		}
+// 	});
+// });
+
+// find a user and all of its posts
+User.findOne({name: "Bob Belcher"}).populate("posts").exec((error, foundUser) => {
+	if(error) {
+		console.log(error);
+	} else {
+		console.log(foundUser);
+	}
 });
 
 // User.create({
