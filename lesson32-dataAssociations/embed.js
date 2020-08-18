@@ -23,22 +23,27 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 let newUser = new User({
-    email: "charlie@brown.edu",
-    name: "Charlie Brown",
+    email: "hermione@hogwarts.edu",
+    name: "Hermione Granger",
 });
 
-// newUser.save((error, user) => {
-//     if (error) {
-//         console.log(error);
-//     } else {
-//         console.log(user);
-//     }
+newUser.posts.push({
+	title: "How to brew polyjuice potion",
+	content: "Just kidding. Go to postions class to learn it!"
+});
+
+newUser.save((error, user) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log(user);
+    }
+});
+
+// let newPost = new Post({
+// 	title: "Reflections on apples",
+// 	content: "They are delicious",
 // });
-
-let newPost = new Post({
-	title: "Reflections on apples",
-	content: "They are delicious",
-});
 
 // newPost.save((error, post) => {
 //     if (error) {
