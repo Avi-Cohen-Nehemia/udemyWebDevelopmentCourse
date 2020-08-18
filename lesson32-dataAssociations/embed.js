@@ -6,13 +6,6 @@ mongoose.connect('mongodb://localhost:27017/blog_demo')
 	.then(() => console.log('Connected to DB!'))
     .catch(error => console.log(error.message));
 
-// USER Schema
-const userSchema = new mongoose.Schema({
-    email: String,
-    name: String,
-});
-const User = mongoose.model("User", userSchema);
-
 // POST Schema
 const postSchema = new mongoose.Schema({
     title: String,
@@ -20,15 +13,37 @@ const postSchema = new mongoose.Schema({
 });
 const Post = mongoose.model("Post", postSchema);
 
+// USER Schema
+const userSchema = new mongoose.Schema({
+    email: String,
+    name: String,
+	// insert the schema to create an association between users and posts
+	posts: [postSchema],
+});
+const User = mongoose.model("User", userSchema);
+
 let newUser = new User({
     email: "charlie@brown.edu",
     name: "Charlie Brown",
 });
 
-newUser.save((error, user) => {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(user);
-    }
+// newUser.save((error, user) => {
+//     if (error) {
+//         console.log(error);
+//     } else {
+//         console.log(user);
+//     }
+// });
+
+let newPost = new Post({
+	title: "Reflections on apples",
+	content: "They are delicious",
 });
+
+// newPost.save((error, post) => {
+//     if (error) {
+//         console.log(error);
+//     } else {
+//         console.log(post);
+//     }
+// });
