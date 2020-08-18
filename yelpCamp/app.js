@@ -1,3 +1,6 @@
+// =========================
+//          SETUP
+// =========================
 // import packages
 const express = require("express");
 const app = express();
@@ -20,21 +23,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
 app.set("view engine", "ejs");
 
-// Campground.create(
-// 	{
-//     	name: "Salmon Creek",
-//         image: "https://images.unsplash.com/photo-1519395612667-3b754d7b9086?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-// 		description: "This is a huge granite hill, no bathrooms, no water, just beautiful granite!"
-//     },
-// 	(error, campground) => {
-// 		if(error) {
-// 			console.log(error);
-// 		} else {
-// 			console.log("new campground added to the data base");
-// 			console.log(campground);
-// 		}
-// 	});
-
+// =========================
+//          ROUTES
+// =========================
 // home/landing page
 app.get("/", (req, res) => {
     res.render("home");
@@ -82,7 +73,7 @@ app.post("/campgrounds", (req, res) => {
 // SHOW rout - show more info about a specific campground
 app.get("/campgrounds/:id", (req, res) => {
 	// find the campground with provided id
-	Campground.findById(req.params.id, (error, foundCampground) => {
+	Campground.findById(req.params.id).populate("comments").exec((error, foundCampground) => {
 		if(error) {
 			console.log(error);
 		} else {
