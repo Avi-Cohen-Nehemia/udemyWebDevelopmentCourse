@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const axios = require('axios');
+// import models
+const Campground = require("./models/campground");
 // import mongoose and connect to db
 const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
@@ -14,15 +16,6 @@ mongoose.connect('mongodb://localhost:27017/yelp_camp')
 app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
 app.set("view engine", "ejs");
-
-// schema setup
-let campgroundSchema = new mongoose.Schema({
-	name: String,
-	image: String,
-	description: String,
-});
-// define a new oobject using the schema created above
-let Campground = mongoose.model("campground", campgroundSchema);
 
 // Campground.create(
 // 	{
