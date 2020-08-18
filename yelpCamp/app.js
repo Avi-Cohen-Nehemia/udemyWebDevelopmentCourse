@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const axios = require('axios');
 // import models
 const Campground = require("./models/campground");
+// seed the data base
+const seedDB = require("./seeds");
 // import mongoose and connect to db
 const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
