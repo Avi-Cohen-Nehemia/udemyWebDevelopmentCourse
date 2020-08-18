@@ -31,27 +31,32 @@ var seedCampgrounds = [
 ]
  
 async const seedDB = () => {
-    // Remove all campgrounds
-    await Campground.remove({});
-    console.log("campgrounds removed")
+    try {
+        // Remove all campgrounds
+        await Campground.remove({});
+        console.log("campgrounds removed")
 
-    // Remove all comments
-    await Comment.remove({});
-    console.log("comments removed")
+        // Remove all comments
+        await Comment.remove({});
+        console.log("comments removed")
 
-    // seed the data array defined at the top of the file
-    seedCampgrounds.forEach((campground) => {
-        let newCampground = await Campground.create(campground);
-        let newComment = await Comment.create(
-            {
-                text: "This place is great, but I wish there was internet",
-                author: "Homer"
-            }
-        );
-        newCampground.comments.push(newComment);
-        newCampground.save();
-    });
-    console.log("data seeded")
+        // seed the data array defined at the top of the file
+        seedCampgrounds.forEach((campground) => {
+            let newCampground = await Campground.create(campground);
+            let newComment = await Comment.create(
+                {
+                    text: "This place is great, but I wish there was internet",
+                    author: "Homer"
+                }
+            );
+            newCampground.comments.push(newComment);
+            newCampground.save();
+        });
+        console.log("data seeded")
+        
+    } catch(error) {
+        console.log(error);
+    }
 }
  
 module.exports = seedDB;
