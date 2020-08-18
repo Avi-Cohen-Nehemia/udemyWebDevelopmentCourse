@@ -8,9 +8,6 @@ const bodyParser = require("body-parser");
 const axios = require('axios');
 // import models
 const Campground = require("./models/campground");
-// import the seeding and seed the data base
-const seedDB = require("./seeds");
-seedDB();
 // import mongoose and connect to db
 const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
@@ -18,6 +15,9 @@ mongoose.set('useUnifiedTopology', true);
 mongoose.connect('mongodb://localhost:27017/yelp_camp')
 	.then(() => console.log('Connected to DB!'))
 	.catch(error => console.log(error.message));
+// import the seeding and seed the data base
+const seedDB = require("./seeds");
+seedDB();
 // tell express to use body parser
 app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
