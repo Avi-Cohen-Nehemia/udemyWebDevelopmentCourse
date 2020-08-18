@@ -30,7 +30,7 @@ var seedCampgrounds = [
     }
 ]
  
-async const seedDB = () => {
+const seedDB = async () => {
     try {
         // Remove all campgrounds
         await Campground.remove({});
@@ -53,7 +53,7 @@ async const seedDB = () => {
             newCampground.save();
         });
         console.log("data seeded")
-        
+
     } catch(error) {
         console.log(error);
     }
