@@ -31,7 +31,15 @@ app.get("/", (req, res) => {
     res.render("home");
 });
 
-app.get("/secret", (req, res) => {
+const isLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+    res.redirect("/login")
+    }
+}
+
+app.get("/secret", isLoggedIn, (req, res) => {
     res.render("secret");
 });
 
@@ -66,8 +74,13 @@ app.post("/login", passport.authenticate("local", {
     successRedirect: "/secret",
     failureRedirect: "/login"
 }),(req, res) => {
+});
 
-    });
+// LOGOUT routes
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/");
+});
 
 app.listen(3000, () => {
     console.log("Auth Demo app started on port 3000");
