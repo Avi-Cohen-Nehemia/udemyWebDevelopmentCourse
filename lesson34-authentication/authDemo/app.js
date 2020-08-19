@@ -1,5 +1,9 @@
 const express = require("express");
-
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const passportLocalMongoose = require("passport-local-mongoose");
+const User = require("./models/user");
 const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
