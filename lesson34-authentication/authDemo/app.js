@@ -1,8 +1,10 @@
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
+const expressSession = require("express-session");
 const User = require("./models/user");
 const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
@@ -11,15 +13,45 @@ mongoose.connect('mongodb://localhost:27017/auth_demo')
 	.then(() => console.log('Connected to DB!'))
 	.catch(error => console.log(error.message));
 
-const app = express();
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressSession({
+    secret: "sushi",
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
+// Routes
 app.get("/", (req, res) => {
     res.render("home");
 });
 
 app.get("/secret", (req, res) => {
     res.render("secret");
+});
+
+// Auth Routes
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+app.post("/register", (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    User.register(new User({username: username}), password, (error, newUser) => {
+        if (error) {
+            console.log(error);
+            return res.render("regiser");
+        } else {
+            passport.authenticate("local")(req, res, () => {
+                res.redirect("/secret");
+            });
+        }
+    });
 });
 
 app.listen(3000, () => {
