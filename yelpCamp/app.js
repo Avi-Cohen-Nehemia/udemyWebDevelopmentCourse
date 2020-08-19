@@ -23,6 +23,8 @@ mongoose.connect('mongodb://localhost:27017/yelp_camp')
 app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
 app.set("view engine", "ejs");
+// tell express to serve the public directory
+app.use(express.static("./public"));
 
 // ==========================
 //     CAMPGROUNDS ROUTES
