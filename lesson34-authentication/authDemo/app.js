@@ -34,11 +34,12 @@ app.get("/secret", (req, res) => {
     res.render("secret");
 });
 
-// Auth Routes
+// AUTH Routes
+// show register form
 app.get("/register", (req, res) => {
     res.render("register");
 });
-
+// sign up
 app.post("/register", (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -52,6 +53,12 @@ app.post("/register", (req, res) => {
             });
         }
     });
+});
+
+// LOGIN routes
+//show login form
+app.get("/login", (req, res) => {
+    res.render("login");
 });
 
 app.listen(3000, () => {
