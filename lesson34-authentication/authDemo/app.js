@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const localStrategy = require("passport-local");
+const LocalStrategy = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
 const expressSession = require("express-session");
 const User = require("./models/user");
@@ -22,6 +22,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -60,6 +61,13 @@ app.post("/register", (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login");
 });
+// login logic
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/secret",
+    failureRedirect: "/login"
+}),(req, res) => {
+
+    });
 
 app.listen(3000, () => {
     console.log("Auth Demo app started on port 3000");
