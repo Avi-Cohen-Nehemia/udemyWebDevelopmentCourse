@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
     res.render("home");
 });
 
+// middleware to check if the user is signed in before rendering '/secret'
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
