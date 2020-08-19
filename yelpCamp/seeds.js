@@ -33,15 +33,15 @@ var seedCampgrounds = [
 const seedDB = async () => {
     try {
         // Remove all campgrounds
-        await Campground.remove({});
-        console.log("campgrounds removed")
+        await Campground.deleteMany({});
+        console.log("campgrounds removed");
 
         // Remove all comments
-        await Comment.remove({});
-        console.log("comments removed")
+        await Comment.deleteMany({});
+        console.log("comments removed");
 
         // seed the data array defined at the top of the file
-        seedCampgrounds.forEach((campground) => {
+        seedCampgrounds.forEach( async (campground) => {
             let newCampground = await Campground.create(campground);
             let newComment = await Comment.create(
                 {
