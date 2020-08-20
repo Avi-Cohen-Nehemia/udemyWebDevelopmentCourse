@@ -139,6 +139,14 @@ app.post("/campgrounds/:id/comments", (req, res) => {
 	});
 });
 
+// ==========================
+//   AUTHENTICATION ROUTES
+// ==========================
+// SHOW route - render the register form
+app.get("/register", (req, res) => {
+	res.render("register");
+});
+
 // set a port for the server to start on
 app.listen(3000, () => {
     console.log("Yelp Camp app started on port 3000");
