@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
+// import passport-local-mongoose for authentication
+const passportLocalMongoose = require("passport-local-mongoose");
 
 // schema setup
-let userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
 	username: String,
 	password: String,
 });
 
+// connect passport-local-mongoose to our user schema
+UserSchema.plugin(passportLocalMongoose);
+
 // define and export new object using the schema created above
-module.exports =  mongoose.model("User", userSchema);
+module.exports =  mongoose.model("User", UserSchema);
