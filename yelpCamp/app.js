@@ -32,7 +32,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate));
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -145,6 +145,23 @@ app.post("/campgrounds/:id/comments", (req, res) => {
 // SHOW route - render the register form
 app.get("/register", (req, res) => {
 	res.render("register");
+});
+// CREATE route - create a new user
+app.post("/register", (req, res) => {
+	// create a new user using the username from the form and save it to a variable
+	const newUser = new User({username: req.body.username});
+	// the register method will attach the password from the form to the new user. It also handle
+	// all the logic of hashing the password and preveting it from being saved to the data base
+	User.register(newUser, req.body.password, (error, user) => {
+		if (error) {
+			console.log(error);
+			return res.render("register");
+		}
+		// once the user signed up they will be authenticated and redirected to the index page
+		passport.authenticate("local")(req, res, () => {
+			res.redirect("/campgrounds");
+		});
+	});
 });
 
 // set a port for the server to start on
