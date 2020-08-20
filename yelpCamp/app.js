@@ -115,7 +115,7 @@ app.get("/campgrounds/:id", (req, res) => {
 //     COMMENTS ROUTES
 // ==========================
 // NEW route - render the submit comment form for a specific campground
-app.get("/campgrounds/:id/comments/new", (req, res) => {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) => {
 	// find the campground by id
 	Campground.findById(req.params.id, (error, foundCampground) => {
 		if(error) {
