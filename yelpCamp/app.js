@@ -127,7 +127,7 @@ app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) => {
 });
 
 // CREATE route - add a new comment to a specific campground
-app.post("/campgrounds/:id/comments", (req, res) => {
+app.post("/campgrounds/:id/comments", isLoggedIn, (req, res) => {
 	// find the campground by id
 	Campground.findById(req.params.id, (error, foundCampground) => {
 		if(error) {
