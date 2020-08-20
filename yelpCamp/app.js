@@ -61,6 +61,7 @@ app.use((req, res, next) => {
 
 // tell app.js to use these route files which need to be declared
 // at the bottom of app.js just before the listen method
+// we can add a prefix to any route file which will be added to all the routes in that file
 app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
