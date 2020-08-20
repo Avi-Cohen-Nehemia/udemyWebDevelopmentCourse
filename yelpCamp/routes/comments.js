@@ -5,6 +5,7 @@ const router = express.Router({ mergeParams: true });
 // import relevant models
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
+const comment = require("../models/comment");
 
 // pass this middleware function to anywhere you would like to check
 // if a user is logged in before allowing them to make some actions
@@ -42,6 +43,10 @@ router.post("/", isLoggedIn, (req, res) => {
 				if (error) {
 					console.log(error);
 				} else {
+                    // take the current user's details and save them to the comment
+                    newComment.author.id = req.user._id;
+                    newComment.author.username = req.user.username;
+                    newComment.save();
 					// add the new comment to the campground
 					foundCampground.comments.push(newComment);
 					foundCampground.save();
