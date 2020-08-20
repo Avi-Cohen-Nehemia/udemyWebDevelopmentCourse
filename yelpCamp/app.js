@@ -43,6 +43,15 @@ app.set("view engine", "ejs");
 // tell express to serve the public directory
 app.use(express.static("./public"));
 
+// pass this middleware function to anywhere you would like to check
+// if a user is logged in before allowing them to make some actions
+const isLoggedIn = (req, res, next) => {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect("/login");
+}
+
 // ==========================
 //     CAMPGROUNDS ROUTES
 // ==========================
