@@ -5,10 +5,13 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const axios = require('axios');
 // import models
 const Campground = require("./models/campground");
 const Comment = require("./models/comment");
+const User = require("./models/user");
 // import mongoose and connect to db
 const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
