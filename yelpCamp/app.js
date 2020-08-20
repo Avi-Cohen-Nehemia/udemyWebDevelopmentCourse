@@ -173,14 +173,21 @@ app.get("/login", (req, res) => {
 });
 
 // route to handle login logic
-// pass the passport.authenticate middleware and check
-// if the details the user entered are correct
+// pass the authentication middleware and check if the details the user entered are correct
 app.post("/login", passport.authenticate("local", {
     successRedirect: "/campgrounds",
     failureRedirect: "/login"
 	}),(req, res) => {
 	}
 );
+
+// logout logic route
+app.get("/logout", (req, res) => {
+	// execute logout method which was provided by the passport packages we installed
+	req.logout();
+	// redirect back to the home page after logging out
+    res.redirect("/");
+});
 
 // set a port for the server to start on
 app.listen(3000, () => {
