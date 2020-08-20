@@ -5,6 +5,15 @@ const router = express.Router();
 // import relevant models
 const Campground = require("../models/campground");
 
+// pass this middleware function to anywhere you would like to check
+// if a user is logged in before allowing them to make some actions
+const isLoggedIn = (req, res, next) => {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect("/login");
+}
+
 // ==========================
 //     CAMPGROUNDS ROUTES
 // ==========================
@@ -20,27 +29,34 @@ router.get("/", (req, res) => {
 });
 
 // NEW route - show the form to create new campground
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
     res.render("campgrounds/new");
 });
 
 // CREATE route - create a new campground
-router.post("/", (req, res) => {
+router.post("/", isLoggedIn, (req, res) => {
     // get the data from the form
     let name = req.body.name;
     let image = req.body.image;
-	let description = req.body.description;
-    // add the new campground to the campgrounds array
+    let description = req.body.description;
+    // get the details of the user who is creating the campground
+    let author = {
+        id: req.user._id,
+        username: req.user.username,
+    };
+    // store all the details in a variable
     let newCampground = {
         name: name,
         image: image,
-		description: description,
-    }
+        description: description,
+        author: author,
+    };
     // Create a new campground using the data above and save it to the DB
 	Campground.create(newCampground, (error, campground) => {
 		if(error) {
 			console.log(error);
 		} else {
+            console.log(campground);
 			// redirect to the campgrounds page
 			res.redirect("/campgrounds");
 		}
