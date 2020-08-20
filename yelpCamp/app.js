@@ -164,6 +164,24 @@ app.post("/register", (req, res) => {
 	});
 });
 
+// ==========================
+//     LOGIN/OUT ROUTES
+// ==========================
+// SHOW route - render the login form
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+// route to handle login logic
+// pass the passport.authenticate middleware and check
+// if the details the user entered are correct
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/campgrounds",
+    failureRedirect: "/login"
+	}),(req, res) => {
+	}
+);
+
 // set a port for the server to start on
 app.listen(3000, () => {
     console.log("Yelp Camp app started on port 3000");
