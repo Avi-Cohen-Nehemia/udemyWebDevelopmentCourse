@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // connect passport-local-mongoose to our user schema
+// which will give it additional methods we can apply to it
 UserSchema.plugin(passportLocalMongoose);
 
 // define and export new object using the schema created above

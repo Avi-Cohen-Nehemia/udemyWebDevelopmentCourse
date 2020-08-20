@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const expressSession = require("express-session");
 const axios = require('axios');
 // import models
 const Campground = require("./models/campground");
@@ -22,6 +23,19 @@ mongoose.connect('mongodb://localhost:27017/yelp_camp')
 // import the seeding and seed the data base
 // const seedDB = require("./seeds");
 // seedDB();
+
+// passport configuration
+app.use(expressSession({
+	secret: "yelpCamp",
+	resave: false,
+    saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // tell express to use body parser
 app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
