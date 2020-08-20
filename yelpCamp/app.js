@@ -36,6 +36,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// middleware to make user information available to all routes
+app.use((req, res, next) => {
+	res.locals.currentUser = req.user;
+	next();
+});
+
 // tell express to use body parser
 app.use(bodyParser.urlencoded({extended: true}));
 // make express process views as ejs files by default
