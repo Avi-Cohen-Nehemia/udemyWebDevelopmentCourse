@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const expressSession = require("express-session");
+const methodOverride = require("method-override");
 const axios = require('axios');
 
 // require routes
@@ -43,6 +44,9 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// tell app to use method override to enable us to make PUT requests
+app.use(methodOverride("_method"));
 
 // tell express to use body parser
 app.use(bodyParser.urlencoded({extended: true}));
