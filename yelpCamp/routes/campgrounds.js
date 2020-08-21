@@ -7,6 +7,9 @@ const Campground = require("../models/campground");
 const Comment = require('../models/comment');
 const campground = require("../models/campground");
 
+// ==========================
+//        MIDDLEWARES
+// ==========================
 // pass this middleware function to anywhere you would like to check
 // if a user is logged in before allowing them to make some actions
 const isLoggedIn = (req, res, next) => {
@@ -101,7 +104,7 @@ router.get("/:id/edit", isTheOwner, async (req, res) => {
 });
 
 // UPDATE route - will update the campground's details when submitting the edit form
-router.put("/:id", async (req, res) => {
+router.put("/:id", isTheOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method to find an item and update its details
 		await Campground.findByIdAndUpdate(req.params.id, req.body.campground);
@@ -113,7 +116,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DESTROY route - will delete a specific campground and its associated comments
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isTheOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method of finding an item
 		let removedCampground = await Campground.findById(req.params.id);
