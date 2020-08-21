@@ -16,6 +16,24 @@ const isLoggedIn = (req, res, next) => {
 	res.redirect("/login");
 }
 
+// a middleware to check if the user is logged in and own the campground they are trying to edit/delete
+const isTheOwner = async (req, res, next) => {
+	// find the campground with provided id and store in a variable
+	let foundCampground = await Campground.findById(req.params.id);
+	// check if the user is logged in
+	if (req.isAuthenticated()) {
+		// check if the user who is trying to edit the campground also owns it
+		// using the mongoose method ".equals"
+		if (foundCampground.author.id.equals(req.user._id)) {
+			next();
+		} else {
+			res.redirect("back");
+		}
+	} else {
+		res.redirect("back");
+	}
+}
+
 // ==========================
 //     CAMPGROUNDS ROUTES
 // ==========================
@@ -69,27 +87,16 @@ router.get("/:id", (req, res) => {
 });
 
 // EDIT route - will render the edit page for a specific campground
-router.get("/:id/edit", async (req, res) => {
+// add middleware "isTheOwner" to check if the user is logged in and the owner of that campground
+router.get("/:id/edit", isTheOwner, async (req, res) => {
 	// find the campground with provided id and store in a variable
 	let foundCampground = await Campground.findById(req.params.id);
-
-	// check if the user is logged in
-	if (req.isAuthenticated()) {
-		// check if the user who is trying to edit the campground also owns it
-		// using the mongoose method ".equals"
-		if (foundCampground.author.id.equals(req.user._id)) {
-			try {
-				// pass the found campground's details to the edit view
-				res.render("campgrounds/edit", { campground: foundCampground });
-			} catch (error) {
-				console.log(error);
-				res.redirect("/campgrounds");
-			}
-		} else {
-			res.send("you do not own this campground!");
-		}
-	} else {
-		res.redirect("/register");
+	try {
+		// pass the found campground's details to the edit view
+		res.render("campgrounds/edit", { campground: foundCampground });
+	} catch (error) {
+		console.log(error);
+		res.redirect("/campgrounds");
 	}
 });
 
