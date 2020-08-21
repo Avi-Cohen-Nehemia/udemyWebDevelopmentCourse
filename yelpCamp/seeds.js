@@ -60,19 +60,22 @@ const seedDB = async () => {
         await Comment.deleteMany({});
         console.log("comments removed");
 
-        // // seed the data array defined at the top of the file
-        // seedCampgrounds.forEach( async (campground) => {
-        //     let newCampground = await Campground.create(campground);
-        //     let newComment = await Comment.create(
-        //         {
-        //             text: "This place is great, but I wish there was internet",
-        //             author: "Homer"
-        //         }
-        //     );
-        //     newCampground.comments.push(newComment);
-        //     newCampground.save();
-        // });
-        // console.log("data seeded")
+        // seed the data array defined at the top of the file
+        seedCampgrounds.forEach( async (campground) => {
+            let newCampground = await Campground.create(campground);
+            let newComment = await Comment.create(
+                {
+                    text: "This place is great, but I wish there was internet",
+                    author: {
+                        id : "588c2e092403d111454fff76",
+                        username: "Jack"
+                    }
+                }
+            );
+            newCampground.comments.push(newComment);
+            newCampground.save();
+        });
+        console.log("data seeded")
 
     } catch(error) {
         console.log(error);
