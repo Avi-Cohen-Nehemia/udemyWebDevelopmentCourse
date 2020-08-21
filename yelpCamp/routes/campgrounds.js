@@ -56,7 +56,6 @@ router.post("/", isLoggedIn, (req, res) => {
 		if(error) {
 			console.log(error);
 		} else {
-            console.log(campground);
 			// redirect to the campgrounds page
 			res.redirect("/campgrounds");
 		}
@@ -70,9 +69,22 @@ router.get("/:id", (req, res) => {
 		if(error) {
 			console.log(error);
 		} else {
-			res.render("campgrounds/show", {campground: foundCampground});
+			res.render("campgrounds/show", { campground: foundCampground });
 		}
 	});
+});
+
+// EDIT route - will render the edit page for a specific campground
+router.get("/:id/edit", (req, res) => {
+	// find the campground with provided id
+	Campground.findById(req.params.id, (error, foundCampground) => {
+		if (error) {
+			res.redirect("/campgrounds")
+		} else {
+			// pass the found campground's details to the edit view
+			res.render("campgrounds/edit", { campground: foundCampground });
+		}
+	});	
 });
 
 // export the routes to use them in app.js

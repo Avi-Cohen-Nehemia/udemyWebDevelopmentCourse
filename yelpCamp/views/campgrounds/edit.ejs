@@ -1,25 +1,25 @@
 <%- include("../partials/header") %>
 
 <div class="container">
-    <h1 class="text-center mb-3">Create a new campground</h1>
+    <h1 class="text-center mb-3">Edit <%= campground.name %></h1>
 
-    <form action="/campgrounds" method="POST" class="form-group">
+    <form action="/campgrounds/<%= campground._id %>/edit?_method=PUT" method="POST" class="form-group">
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
                 <label for="name">Campground Name</label>
-                <input type="text" placeholder="name" name="name" class="form-control">
+                <input type="text" value="<%= campground.name %>" name="name" class="form-control">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
                 <label for="image">Image URL</label>
-                <input type="text" placeholder="image url" name="image" class="form-control">
+                <input type="text" value="<%= campground.image %>" name="image" class="form-control">
             </div>
         </div>
 		<div class="row">
             <div class="form-group col-md-6 mx-auto">
                 <label for="description">Description</label>
-                <textarea placeholder="description" name="description" class="form-control" rows="4" ></textarea>
+                <textarea placeholder="description" name="description" class="form-control" rows="4" ><%= campground.description %></textarea>
             </div>
         </div>
         <div class="row">
