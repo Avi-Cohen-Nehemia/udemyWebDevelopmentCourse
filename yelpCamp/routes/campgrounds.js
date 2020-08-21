@@ -36,20 +36,14 @@ router.get("/new", isLoggedIn, (req, res) => {
 
 // CREATE route - create a new campground
 router.post("/", isLoggedIn, (req, res) => {
-    // get the data from the form
-    let name = req.body.name;
-    let image = req.body.image;
-    let description = req.body.description;
     // get the details of the user who is creating the campground
     let author = {
         id: req.user._id,
         username: req.user.username,
     };
-    // store all the details in a variable
+    // store the data from the form and the author's details in a variable
     let newCampground = {
-        name: name,
-        image: image,
-        description: description,
+        ...req.body.campground,
         author: author,
     };
     // Create a new campground using the data above and save it to the DB
