@@ -87,5 +87,18 @@ router.get("/:id/edit", (req, res) => {
 	});	
 });
 
+// UPDATE route - will update the campground's details when submitting the edit form
+router.put("/:id", (req, res) => {
+	// use mongoose's built in method of finding by id AND updating the found item
+	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (error, updatedCampground) => {
+		if (error) {
+			res.redirect("/campgrounds")
+		} else {
+			// pass the found campground's details to the edit view
+			res.redirect(`/campgrounds/${req.params.id}`);
+		}
+	});
+});
+
 // export the routes to use them in app.js
 module.exports = router;
