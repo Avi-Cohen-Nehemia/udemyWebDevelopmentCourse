@@ -35,26 +35,24 @@ router.get("/new", isLoggedIn, (req, res) => {
 });
 
 // CREATE route - create a new campground
-router.post("/", isLoggedIn, (req, res) => {
-    // get the details of the user who is creating the campground
-    let author = {
-        id: req.user._id,
-        username: req.user.username,
-    };
-    // store the data from the form and the author's details in a variable
-    let newCampground = {
-        ...req.body.campground,
-        author: author,
-    };
-    // Create a new campground using the data above and save it to the DB
-	Campground.create(newCampground, (error, campground) => {
-		if(error) {
-			console.log(error);
-		} else {
-			// redirect to the campgrounds page
-			res.redirect("/campgrounds");
-		}
-	});
+router.post("/", isLoggedIn, async (req, res) => {
+	try {
+		// get the details of the user who is creating the campground
+		let author = {
+			id: req.user._id,
+			username: req.user.username,
+		};
+		// store the data from the form and the author's details in a variable
+		let newCampground = {
+			...req.body.campground,
+			author: author,
+		};
+		// Create a new campground using the data above and save it to the DB
+		await Campground.create(newCampground);
+		res.redirect("/campgrounds");
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 // SHOW route - show more info about a specific campground
