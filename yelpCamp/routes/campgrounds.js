@@ -89,16 +89,15 @@ router.get("/:id/edit", (req, res) => {
 });
 
 // UPDATE route - will update the campground's details when submitting the edit form
-router.put("/:id", (req, res) => {
-	// use mongoose's built in method of finding by id AND updating the found item
-	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (error, updatedCampground) => {
-		if (error) {
-			res.redirect("/campgrounds")
-		} else {
-			// pass the found campground's details to the edit view
-			res.redirect(`/campgrounds/${req.params.id}`);
-		}
-	});
+router.put("/:id", async (req, res) => {
+	try {
+		// use mongoose's built in method to find an item and update its details
+		await Campground.findByIdAndUpdate(req.params.id, req.body.campground);
+		res.redirect(`/campgrounds/${req.params.id}`);
+	} catch (error) {
+		console.log(error);
+		res.redirect("/campgrounds");
+	}
 });
 
 // DESTROY route - will delete a specific campground and its associated comments
