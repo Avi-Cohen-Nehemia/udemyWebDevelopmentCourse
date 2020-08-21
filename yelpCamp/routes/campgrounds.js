@@ -100,5 +100,17 @@ router.put("/:id", (req, res) => {
 	});
 });
 
+// DESTROY route - will delete a specific campground
+router.delete("/:id", (req, res) => {
+	// use mongoose's built in method of finding by id AND deleting the found item
+	Campground.findByIdAndRemove(req.params.id, (error) => {
+		if (error) {
+			res.redirect("/campgrounds")
+		} else {
+			res.redirect("/campgrounds/");
+		}
+	});
+});
+
 // export the routes to use them in app.js
 module.exports = router;
