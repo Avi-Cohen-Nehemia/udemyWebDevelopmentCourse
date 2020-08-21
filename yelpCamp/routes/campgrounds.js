@@ -5,6 +5,7 @@ const router = express.Router();
 // import relevant models
 const Campground = require("../models/campground");
 const Comment = require('../models/comment');
+const campground = require("../models/campground");
 
 // pass this middleware function to anywhere you would like to check
 // if a user is logged in before allowing them to make some actions
@@ -69,14 +70,26 @@ router.get("/:id", (req, res) => {
 
 // EDIT route - will render the edit page for a specific campground
 router.get("/:id/edit", async (req, res) => {
-	try {
-		// find the campground with provided id and store in a variable
-		let foundCampground = await Campground.findById(req.params.id);
-		// pass the found campground's details to the edit view
-		res.render("campgrounds/edit", { campground: foundCampground });
-	} catch (error) {
-		console.log(error)
-		res.redirect("/campgrounds")
+	// find the campground with provided id and store in a variable
+	let foundCampground = await Campground.findById(req.params.id);
+
+	// check if the user is logged in
+	if (req.isAuthenticated()) {
+		// check if the user who is trying to edit the campground also owns it
+		// using the mongoose method ".equals"
+		if (foundCampground.author.id.equals(req.user._id)) {
+			try {
+				// pass the found campground's details to the edit view
+				res.render("campgrounds/edit", { campground: foundCampground });
+			} catch (error) {
+				console.log(error);
+				res.redirect("/campgrounds");
+			}
+		} else {
+			res.send("you do not own this campground!");
+		}
+	} else {
+		res.redirect("/register");
 	}
 });
 
