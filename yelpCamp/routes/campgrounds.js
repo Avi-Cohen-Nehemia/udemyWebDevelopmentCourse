@@ -68,16 +68,16 @@ router.get("/:id", (req, res) => {
 });
 
 // EDIT route - will render the edit page for a specific campground
-router.get("/:id/edit", (req, res) => {
-	// find the campground with provided id
-	Campground.findById(req.params.id, (error, foundCampground) => {
-		if (error) {
-			res.redirect("/campgrounds")
-		} else {
-			// pass the found campground's details to the edit view
-			res.render("campgrounds/edit", { campground: foundCampground });
-		}
-	});	
+router.get("/:id/edit", async (req, res) => {
+	try {
+		// find the campground with provided id and store in a variable
+		let foundCampground = await Campground.findById(req.params.id);
+		// pass the found campground's details to the edit view
+		res.render("campgrounds/edit", { campground: foundCampground });
+	} catch (error) {
+		console.log(error)
+		res.redirect("/campgrounds")
+	}
 });
 
 // UPDATE route - will update the campground's details when submitting the edit form
