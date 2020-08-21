@@ -4,6 +4,7 @@ const router = express.Router();
 
 // import relevant models
 const Campground = require("../models/campground");
+const Comment = require('../models/comment');
 
 // pass this middleware function to anywhere you would like to check
 // if a user is logged in before allowing them to make some actions
@@ -100,16 +101,20 @@ router.put("/:id", (req, res) => {
 	});
 });
 
-// DESTROY route - will delete a specific campground
-router.delete("/:id", (req, res) => {
-	// use mongoose's built in method of finding by id AND deleting the found item
-	Campground.findByIdAndRemove(req.params.id, (error) => {
-		if (error) {
-			res.redirect("/campgrounds")
-		} else {
-			res.redirect("/campgrounds/");
-		}
-	});
+// DESTROY route - will delete a specific campground and its associated comments
+router.delete("/:id", async (req, res) => {
+	try {
+		// use mongoose's built in method of finding an item
+		let removedCampground = await Campground.findById(req.params.id);
+		// remove the campground's associated comments
+		await Comment.deleteMany({_id: { $in: removedCampground.comments }})
+		// remove the campground
+		await removedCampground.remove();
+		res.redirect("/campgrounds");
+	} catch (error) {
+		console.log(error);
+		res.redirect("/campgrounds");
+	}
 });
 
 // export the routes to use them in app.js
