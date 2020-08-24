@@ -80,5 +80,20 @@ router.put("/:comment_id", async (req, res) => {
 	}
 });
 
+// DESTROY route - will delete a specific comment
+router.delete("/:comment_id", async (req, res) => {
+	try {
+		// use mongoose's built in method of finding an item
+		let removedComment = await Comment.findById(req.params.comment_id);
+		// remove the comment
+		await removedComment.remove();
+		// remove back to the show page
+		res.redirect(`/campgrounds/${req.params.id}`);
+	} catch (error) {
+		console.log(error);
+		res.redirect("back");
+	}
+});
+
 // export the routes to use them in app.js
 module.exports = router;
