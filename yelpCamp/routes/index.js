@@ -13,15 +13,6 @@ router.get("/", (req, res) => {
     res.render("home");
 });
 
-// pass this middleware function to anywhere you would like to check
-// if a user is logged in before allowing them to make some actions
-const isLoggedIn = (req, res, next) => {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.redirect("/login");
-}
-
 // ==========================
 //   AUTHENTICATION ROUTES
 // ==========================

@@ -2,40 +2,12 @@
 const express = require("express");
 const router = express.Router();
 
-// import relevant models
+// require relevant models
 const Campground = require("../models/campground");
 const Comment = require('../models/comment');
-const campground = require("../models/campground");
 
-// ==========================
-//        MIDDLEWARES
-// ==========================
-// pass this middleware function to anywhere you would like to check
-// if a user is logged in before allowing them to make some actions
-const isLoggedIn = (req, res, next) => {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.redirect("/login");
-}
-
-// a middleware to check if the user is logged in and own the campground they are trying to edit/delete
-const isTheCampgroundOwner = async (req, res, next) => {
-	// find the campground with provided id and store in a variable
-	let foundCampground = await Campground.findById(req.params.id);
-	// check if the user is logged in
-	if (req.isAuthenticated()) {
-		// check if the user who is trying to edit the campground also owns it
-		// using the mongoose method ".equals"
-		if (foundCampground.author.id.equals(req.user._id)) {
-			next();
-		} else {
-			res.redirect("back");
-		}
-	} else {
-		res.redirect("back");
-	}
-}
+// require the middleware index.js file
+const middleware = require("../middleware");
 
 // ==========================
 //     CAMPGROUNDS ROUTES
@@ -52,12 +24,12 @@ router.get("/", (req, res) => {
 });
 
 // NEW route - show the form to create new campground
-router.get("/new", isLoggedIn, (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("campgrounds/new");
 });
 
 // CREATE route - create a new campground
-router.post("/", isLoggedIn, async (req, res) => {
+router.post("/", middleware.isLoggedIn, async (req, res) => {
 	try {
 		// get the details of the user who is creating the campground
 		let author = {
@@ -91,7 +63,7 @@ router.get("/:id", (req, res) => {
 
 // EDIT route - will render the edit page for a specific campground
 // add middleware "isTheCampgroundOwner" to check if the user is logged in and the owner of that campground
-router.get("/:id/edit", isTheCampgroundOwner, async (req, res) => {
+router.get("/:id/edit", middleware.isTheCampgroundOwner, async (req, res) => {
 	// find the campground with provided id and store in a variable
 	let foundCampground = await Campground.findById(req.params.id);
 	try {
@@ -104,7 +76,7 @@ router.get("/:id/edit", isTheCampgroundOwner, async (req, res) => {
 });
 
 // UPDATE route - will update the campground's details when submitting the edit form
-router.put("/:id", isTheCampgroundOwner, async (req, res) => {
+router.put("/:id", middleware.isTheCampgroundOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method to find an item and update its details
 		await Campground.findByIdAndUpdate(req.params.id, req.body.campground);
@@ -116,7 +88,7 @@ router.put("/:id", isTheCampgroundOwner, async (req, res) => {
 });
 
 // DESTROY route - will delete a specific campground and its associated comments
-router.delete("/:id", isTheCampgroundOwner, async (req, res) => {
+router.delete("/:id", middleware.isTheCampgroundOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method of finding an item
 		let removedCampground = await Campground.findById(req.params.id);
