@@ -58,7 +58,13 @@ router.post("/", isLoggedIn, (req, res) => {
 });
 
 router.get("/:comment_id/edit", async (req, res) => {
-	
+	let foundCampground = await Campground.findById(req.params.id);
+	let foundComment = await Comment.findById(req.params.comment_id);
+	try {
+		res.render("comments/edit", { campground: foundCampground, comment: foundComment });
+	} catch (error) {
+		res.redirect("back");
+	}
 });
 
 // export the routes to use them in app.js
