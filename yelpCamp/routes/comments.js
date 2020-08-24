@@ -99,7 +99,7 @@ router.put("/:comment_id", isTheCommentOwner, async (req, res) => {
 });
 
 // DESTROY route - will delete a specific comment
-router.delete("/:comment_id", async (req, res) => {
+router.delete("/:comment_id", isTheCommentOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method of finding an item
 		let removedComment = await Comment.findById(req.params.comment_id);

@@ -37,10 +37,13 @@
                             <strong><%= comment.author.username %></strong>
                             <span class="float-right">10 days ago</span>
                             <p><%= comment.text %></p>
+                            <!-- show these buttons only if the user is logged in and owns the campground -->
+                            <% if (currentUser && (comment.author.id.equals(currentUser._id))) { %>
                             <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
                             <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="d-inline">
                                 <button class="btn btn-sm btn-danger font-weight-bold">Delete</button>
                             </form>
+                            <% } %>
                         </div>
                     </div>
                 <% }) %>
