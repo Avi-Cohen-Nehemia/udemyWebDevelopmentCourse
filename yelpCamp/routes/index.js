@@ -63,8 +63,8 @@ router.get("/logout", (req, res) => {
 	req.logout();
 	// add a message for user feddback
 	req.flash("success", "You Have Logged Out Successfuly!");
-	// redirect back to the home page after logging out
-    res.redirect("/");
+	// redirect back to the campgrounds page after logging out
+    res.redirect("/campgrounds");
 });
 
 // export the routes to use them in app.js
