@@ -54,7 +54,8 @@ router.get("/:id", (req, res) => {
 	// find the campground with provided id
 	Campground.findById(req.params.id).populate("comments").exec((error, foundCampground) => {
 		if(error) {
-			console.log(error);
+			req.flash("error", "Campground not found")
+			res.redirect("back");
 		} else {
 			res.render("campgrounds/show", { campground: foundCampground });
 		}

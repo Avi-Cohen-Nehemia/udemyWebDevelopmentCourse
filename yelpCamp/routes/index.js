@@ -29,11 +29,12 @@ router.post("/register", (req, res) => {
 	// all the logic of hashing the password and preveting it from being saved to the data base
 	User.register(newUser, req.body.password, (error, user) => {
 		if (error) {
-			console.log(error);
-			return res.render("register");
+			req.flash("error", error.message);
+			return res.redirect("/register");
 		}
 		// once the user signed up they will be authenticated and redirected to the index page
 		passport.authenticate("local")(req, res, () => {
+			req.flash("success", `Welcome to Yelp Camp ${user.username}!`);
 			res.redirect("/campgrounds");
 		});
 	});
@@ -60,6 +61,8 @@ router.post("/login", passport.authenticate("local", {
 router.get("/logout", (req, res) => {
 	// execute logout method which was provided by the passport packages we installed
 	req.logout();
+	// add a message for user feddback
+	req.flash("success", "You Have Logged Out Successfuly!");
 	// redirect back to the home page after logging out
     res.redirect("/");
 });

@@ -11,7 +11,8 @@ const middlewareObj = {};
 middlewareObj.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
 		return next();
-	}
+    }
+    req.flash("error", "You need to be logged in to do that");
 	res.redirect("/login");
 }
 
@@ -26,9 +27,11 @@ middlewareObj.isTheCampgroundOwner = async (req, res, next) => {
 		if (foundCampground.author.id.equals(req.user._id)) {
 			next();
 		} else {
+            req.flash("error", "You are not the owner of this campground");
 			res.redirect("back");
 		}
 	} else {
+        req.flash("error", "You need to be logged in to do that");
 		res.redirect("back");
 	}
 }
@@ -44,9 +47,11 @@ middlewareObj.isTheCommentOwner = async (req, res, next) => {
 		if (foundComment.author.id.equals(req.user._id)) {
 			next();
 		} else {
+            req.flash("error", "You are not the owner of this comment");
 			res.redirect("back");
 		}
 	} else {
+        req.flash("error", "You need to be logged in to do that");
 		res.redirect("back");
 	}
 }

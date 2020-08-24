@@ -29,7 +29,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 	// find the campground by id
 	Campground.findById(req.params.id, (error, foundCampground) => {
 		if(error) {
-			console.log(error);
+			req.flash("error", "Something went wrong");
 		} else {
 			// create and add the comment to the DB using the data from the form
 			Comment.create(req.body.comment, (error, newComment) => {
@@ -43,6 +43,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 					// add the new comment to the campground
 					foundCampground.comments.push(newComment);
 					foundCampground.save();
+					req.flash("success", "Comment added successfuly");
 					res.redirect(`/campgrounds/${foundCampground._id}`);
 				}
 			});
@@ -66,6 +67,8 @@ router.put("/:comment_id", middleware.isTheCommentOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method to find an item and update its details
 		await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
+		// add alert as feedback for the user
+		req.flash("success", "Comment edited successfuly");
 		res.redirect(`/campgrounds/${req.params.id}`);
 	} catch (error) {
 		console.log(error);
@@ -80,6 +83,8 @@ router.delete("/:comment_id", middleware.isTheCommentOwner, async (req, res) => 
 		let removedComment = await Comment.findById(req.params.comment_id);
 		// remove the comment
 		await removedComment.remove();
+		// add alert as feedback for the user
+		req.flash("success", "Comment deleted successfuly");
 		// remove back to the show page
 		res.redirect(`/campgrounds/${req.params.id}`);
 	} catch (error) {
