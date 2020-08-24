@@ -57,5 +57,9 @@ router.post("/", isLoggedIn, (req, res) => {
 	});
 });
 
+router.get("/:comment_id/edit", async (req, res) => {
+	
+});
+
 // export the routes to use them in app.js
 module.exports = router;
