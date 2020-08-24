@@ -57,12 +57,25 @@ router.post("/", isLoggedIn, (req, res) => {
 	});
 });
 
+// EDIT route - will render the edit page for a specific comment
 router.get("/:comment_id/edit", async (req, res) => {
 	let foundCampground = await Campground.findById(req.params.id);
 	let foundComment = await Comment.findById(req.params.comment_id);
 	try {
 		res.render("comments/edit", { campground: foundCampground, comment: foundComment });
 	} catch (error) {
+		res.redirect("back");
+	}
+});
+
+// UPDATE route - will update the comment's details when submitting the edit form
+router.put("/:comment_id", async (req, res) => {
+	try {
+		// use mongoose's built in method to find an item and update its details
+		await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
+		res.redirect(`/campgrounds/${req.params.id}`);
+	} catch (error) {
+		console.log(error);
 		res.redirect("back");
 	}
 });
