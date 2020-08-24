@@ -9,6 +9,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const expressSession = require("express-session");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
 const axios = require('axios');
 
 // require routes
@@ -48,6 +49,9 @@ passport.deserializeUser(User.deserializeUser());
 
 // tell app to use method override to enable us to make PUT requests
 app.use(methodOverride("_method"));
+
+// tell app to use connect-flash
+app.use(flash());
 
 // tell express to use body parser
 app.use(bodyParser.urlencoded({extended: true}));
