@@ -52,14 +52,21 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 });
 
 // EDIT route - will render the edit page for a specific comment
-router.get("/:comment_id/edit", middleware.isTheCommentOwner, async (req, res) => {
-	let foundCampground = await Campground.findById(req.params.id);
-	let foundComment = await Comment.findById(req.params.comment_id);
-	try {
-		res.render("comments/edit", { campground: foundCampground, comment: foundComment });
-	} catch (error) {
-		res.redirect("back");
-	}
+router.get("/:comment_id/edit", middleware.isTheCommentOwner, (req, res) => {
+	Campground.findById(req.params.id, (error, foundCampground) => {
+		if (error || !foundCampground) {
+			req.flash("error", "Campground not found");
+			return res.redirect("/campgrounds");
+		}
+		Comment.findById(req.params.comment_id, (error, foundComment) => {
+			if (error || !foundComment) {
+				req.flash("error", "Comment not found");
+				return res.redirect("/campgrounds");
+			} else {
+				res.render("comments/edit", { campground: foundCampground, comment: foundComment });
+			}
+		});
+	});
 });
 
 // UPDATE route - will update the comment's details when submitting the edit form

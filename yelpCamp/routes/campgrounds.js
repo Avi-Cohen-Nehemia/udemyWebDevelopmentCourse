@@ -53,9 +53,9 @@ router.post("/", middleware.isLoggedIn, async (req, res) => {
 router.get("/:id", (req, res) => {
 	// find the campground with provided id
 	Campground.findById(req.params.id).populate("comments").exec((error, foundCampground) => {
-		if(error) {
+		if(error || !foundCampground) {
 			req.flash("error", "Campground not found")
-			res.redirect("back");
+			res.redirect("/campgrounds");
 		} else {
 			res.render("campgrounds/show", { campground: foundCampground });
 		}
