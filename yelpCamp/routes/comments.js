@@ -16,6 +16,24 @@ const isLoggedIn = (req, res, next) => {
 	res.redirect("/login");
 }
 
+// a middleware to check if the user is logged in and own the comment they are trying to edit/delete
+const isTheCommentOwner = async (req, res, next) => {
+	// find the comment with provided id and store in a variable
+	let foundComment = await Comment.findById(req.params.comment_id);
+	// check if the user is logged in
+	if (req.isAuthenticated()) {
+		// check if the user who is trying to edit the comment also owns it
+		// using the mongoose method ".equals"
+		if (foundComment.author.id.equals(req.user._id)) {
+			next();
+		} else {
+			res.redirect("back");
+		}
+	} else {
+		res.redirect("back");
+	}
+}
+
 // ==========================
 //     COMMENTS ROUTES
 // ==========================
@@ -58,7 +76,7 @@ router.post("/", isLoggedIn, (req, res) => {
 });
 
 // EDIT route - will render the edit page for a specific comment
-router.get("/:comment_id/edit", async (req, res) => {
+router.get("/:comment_id/edit", isTheCommentOwner, async (req, res) => {
 	let foundCampground = await Campground.findById(req.params.id);
 	let foundComment = await Comment.findById(req.params.comment_id);
 	try {
@@ -69,7 +87,7 @@ router.get("/:comment_id/edit", async (req, res) => {
 });
 
 // UPDATE route - will update the comment's details when submitting the edit form
-router.put("/:comment_id", async (req, res) => {
+router.put("/:comment_id", isTheCommentOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method to find an item and update its details
 		await Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment);
