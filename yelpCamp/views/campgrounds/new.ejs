@@ -6,26 +6,32 @@
     <form action="/campgrounds" method="POST" class="form-group">
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="name">Campground Name</label>
-                <input type="text" placeholder="name" name="campground[name]" class="form-control">
+                <label for="new-name">Campground Name</label>
+                <input type="text" name="campground[name]" id="new-name" class="form-control">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="price">Price Per Night</label>
-                <input type="number" placeholder="price" name="campground[price]" class="form-control" min="0.01" step="0.01">
+                <label for="new-price">Price Per Night</label>
+                <input type="number" name="campground[price]" id="new-price" class="form-control" min="0.01" step="0.01">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="image">Image URL</label>
-                <input type="text" placeholder="image url" name="campground[image]" class="form-control">
+                <label for="new-image">Image URL</label>
+                <input type="text" name="campground[image]" id="new-image" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mx-auto">
+                <label for="new-location">Location</label>
+                <input type="text" name="campground[location]" id="new-location" class="form-control">
             </div>
         </div>
 		<div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="description">Description</label>
-                <textarea placeholder="description" name="campground[description]" class="form-control" rows="4" ></textarea>
+                <label for="new-description">Description</label>
+                <textarea name="campground[description]" id="new-description" class="form-control" rows="4" ></textarea>
             </div>
         </div>
         <div class="row">

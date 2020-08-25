@@ -9,6 +9,16 @@ const Comment = require('../models/comment');
 // require the middleware index.js file
 const middleware = require("../middleware");
 
+// require node-geocode for google maps api
+const NodeGeocoder = require('node-geocoder');
+const options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+const geocoder = NodeGeocoder(options);
+
 // ==========================
 //     CAMPGROUNDS ROUTES
 // ==========================
@@ -27,25 +37,40 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("campgrounds/new");
 });
 
-// CREATE route - create a new campground
-router.post("/", middleware.isLoggedIn, async (req, res) => {
-	try {
-		// get the details of the user who is creating the campground
-		let author = {
-			id: req.user._id,
-			username: req.user.username,
-		};
-		// store the data from the form and the author's details in a variable
+// CREATE - add new campground to DB
+router.post("/", middleware.isLoggedIn,(req, res) => {
+	// get the details of the user who is creating the campground
+	let author = {
+		id: req.user._id,
+		username: req.user.username,
+	};
+	geocoder.geocode(req.body.campground.location, (err, data) => {
+		if (err || !data.length) {
+			req.flash('error', 'Invalid address');
+			return res.redirect('back');
+		}
+		let lat = data[0].latitude;
+		let lng = data[0].longitude;
+		let location = data[0].formattedAddress;
 		let newCampground = {
 			...req.body.campground,
 			author: author,
+			location: location,
+			lat: lat,
+			lng: lng
 		};
-		// Create a new campground using the data above and save it to the DB
-		await Campground.create(newCampground);
-		res.redirect("/campgrounds");
-	} catch (error) {
-		console.log(error);
-	}
+		// Create a new campground and save to DB
+		Campground.create(newCampground, (err, newlyCreated) => {
+			if(err){
+				console.log(err);
+			} else {
+				//redirect back to campgrounds page
+				console.log(newlyCreated);
+				req.flash("success","Campground created successfuly!");
+				res.redirect("/campgrounds");
+			}
+	  	});
+	});
 });
 
 // SHOW route - show more info about a specific campground
@@ -76,15 +101,26 @@ router.get("/:id/edit", middleware.isTheCampgroundOwner, async (req, res) => {
 });
 
 // UPDATE route - will update the campground's details when submitting the edit form
-router.put("/:id", middleware.isTheCampgroundOwner, async (req, res) => {
-	try {
-		// use mongoose's built in method to find an item and update its details
-		await Campground.findByIdAndUpdate(req.params.id, req.body.campground);
-		res.redirect(`/campgrounds/${req.params.id}`);
-	} catch (error) {
-		console.log(error);
-		res.redirect("/campgrounds");
-	}
+router.put("/:id", middleware.isTheCampgroundOwner, (req, res) => {
+	geocoder.geocode(req.body.campground.location, (error, data) => {
+		if (error || !data.length) {
+			req.flash('error', 'Invalid address');
+			return res.redirect('back');
+		}
+		req.body.campground.lat = data[0].latitude;
+		req.body.campground.lng = data[0].longitude;
+		req.body.campground.location = data[0].formattedAddress;
+  
+	  	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (error, campground) => {
+			if(error){
+				req.flash("error", error.message);
+				res.redirect("back");
+			} else {
+				req.flash("success","Campground updated successfuly!");
+				res.redirect("/campgrounds/" + campground._id);
+			}
+	  	});
+	});
 });
 
 // DESTROY route - will delete a specific campground and its associated comments

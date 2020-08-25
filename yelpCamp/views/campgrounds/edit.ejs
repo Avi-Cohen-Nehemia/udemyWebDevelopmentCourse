@@ -6,26 +6,32 @@
     <form action="/campgrounds/<%= campground._id %>/?_method=PUT" method="POST" class="form-group">
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="name">Campground Name</label>
-                <input type="text" value="<%= campground.name %>" name="campground[name]" class="form-control">
+                <label for="edit-name">Campground Name</label>
+                <input type="text" value="<%= campground.name %>" name="campground[name]"id="edit-name" class="form-control">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="price">Price Per Night</label>
-                <input type="number" value="<%= campground.price %>" name="campground[price]" class="form-control" min="0.01" step="0.01">
+                <label for="edit-price">Price Per Night</label>
+                <input type="number" value="<%= campground.price %>" name="campground[price]" id="edit-price" class="form-control" min="0.01" step="0.01">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="image">Image URL</label>
-                <input type="text" value="<%= campground.image %>" name="campground[image]" class="form-control">
+                <label for="edit-image">Image URL</label>
+                <input type="text" value="<%= campground.image %>" name="campground[image]" id="edit-image" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mx-auto">
+                <label for="edit-location">Location</label>
+                <input type="text" value="<%= campground.location %>" name="campground[location]" id="edit-location" class="form-control">
             </div>
         </div>
 		<div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="description">Description</label>
-                <textarea placeholder="description" name="campground[description]" class="form-control" rows="4" ><%= campground.description %></textarea>
+                <label for="edit-description">Description</label>
+                <textarea name="campground[description]" id="edit-description" class="form-control" rows="4" ><%= campground.description %></textarea>
             </div>
         </div>
         <div class="row">
