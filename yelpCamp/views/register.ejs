@@ -1,11 +1,32 @@
 <%- include("./partials/header") %>
 
-<h1>Sign Up!</h1>
+<div class="container">
+    <h1 class="text-center mb-3">Sign Up</h1>
 
-<form action="/register" method="POST">
-    <input type="text" placeholder="username" name="username">
-    <input type="password" placeholder="password" name="password">
-    <button type="submit">Sign Up</button>
-</form>
+    <form action="/register" method="POST" class="form-group">
+        <div class="row">
+            <div class="form-group col-md-6 mx-auto">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mx-auto">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mx-auto">
+                <button type="submit" class="btn btn-lg btn-success btn-block">Sign Up</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+            <a href="/campgrounds">Go Back</a>
+        </div>
+    </div>
+</div>
 
 <%- include("./partials/footer") %>
