@@ -13,14 +13,13 @@ const middleware = require("../middleware");
 //     CAMPGROUNDS ROUTES
 // ==========================
 // INDEX route - show all campgrounds
-router.get("/", (req, res) => {
-	Campground.find({}, (error, campgrounds) => {
-		if(error) {
-			console.log(error);
-		} else {
-			res.render("campgrounds/index", {campgrounds: campgrounds});
-		}
-	});
+router.get("/", async (req, res) => {
+	try {
+		let allCampgrounds = await Campground.find();
+		res.render("campgrounds/index", {campgrounds: allCampgrounds});
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 // NEW route - show the form to create new campground
@@ -65,9 +64,9 @@ router.get("/:id", (req, res) => {
 // EDIT route - will render the edit page for a specific campground
 // add middleware "isTheCampgroundOwner" to check if the user is logged in and the owner of that campground
 router.get("/:id/edit", middleware.isTheCampgroundOwner, async (req, res) => {
-	// find the campground with provided id and store in a variable
-	let foundCampground = await Campground.findById(req.params.id);
 	try {
+		// find the campground with provided id and store in a variable
+		let foundCampground = await Campground.findById(req.params.id);
 		// pass the found campground's details to the edit view
 		res.render("campgrounds/edit", { campground: foundCampground });
 	} catch (error) {
