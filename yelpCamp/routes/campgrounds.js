@@ -67,7 +67,7 @@ router.post("/", middleware.isLoggedIn,(req, res) => {
 				//redirect back to campgrounds page
 				console.log(newlyCreated);
 				req.flash("success","Campground created successfuly!");
-				res.redirect("/campgrounds");
+				res.redirect(`/campgrounds/${newlyCreated._id}`);
 			}
 	  	});
 	});
