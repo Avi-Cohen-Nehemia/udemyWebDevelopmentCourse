@@ -44,7 +44,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 					foundCampground.comments.push(newComment);
 					foundCampground.save();
 					req.flash("success", "Comment added successfuly");
-					res.redirect(`/campgrounds/${foundCampground._id}`);
+					return res.redirect(`/campgrounds/${foundCampground._id}`);
 				}
 			});
 		}
