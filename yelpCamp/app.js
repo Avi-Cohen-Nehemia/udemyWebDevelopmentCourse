@@ -11,6 +11,7 @@ const LocalStrategy = require("passport-local");
 const expressSession = require("express-session");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
+app.locals.moment = require('moment');
 
 // require routes
 const campgroundRoutes = require("./routes/campgrounds");
