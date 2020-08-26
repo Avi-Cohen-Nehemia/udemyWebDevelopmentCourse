@@ -19,16 +19,37 @@ const options = {
 };
 const geocoder = NodeGeocoder(options);
 
+const escapeRegex = (text) => {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 // ==========================
 //     CAMPGROUNDS ROUTES
 // ==========================
 // INDEX route - show all campgrounds
-router.get("/", async (req, res) => {
-	try {
-		let allCampgrounds = await Campground.find();
-		res.render("campgrounds/index", {campgrounds: allCampgrounds});
-	} catch (error) {
-		console.log(error);
+router.get("/", (req, res) => {
+	if (req.query.search) {
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		Campground.find({name: regex}, (error, allCampgrounds) => {
+			if (error) {
+				console.log(error);
+			} else {
+				if (allCampgrounds.length === 0) {
+					req.flash('error', 'No Campgrounds found');
+					return res.redirect('back');
+				} else {
+					res.render("campgrounds/index", {campgrounds: allCampgrounds});
+				}	
+			}
+		});
+	} else {
+		Campground.find({}, (error, allCampgrounds) => {
+			if (error) {
+				console.log(error);
+			} else {
+				res.render("campgrounds/index", {campgrounds: allCampgrounds});
+			}
+		});
 	}
 });
 
