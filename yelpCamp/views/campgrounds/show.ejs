@@ -29,22 +29,22 @@
             </div>
             <div class="card card-header mb-4">
                 <div class="text-right">
-                    <p class="my-auto"><a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-success">Add New Review</a></p>
+                    <p class="my-auto"><a href="/campgrounds/<%= campground._id %>/reviews/new" class="btn btn-success">Add New Review</a></p>
                 </div>
-                <% campground.comments.map(comment => { %>
+                <% campground.reviews.map(review => { %>
                     <hr>
                     <div class="row">
                         <div class="col-md-12 mt-3">
                             <p>
                                 Review by: 
-                                <strong><%= comment.author.username %></strong>
-                                <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
+                                <strong><%= review.author.username %></strong>
+                                <span class="float-right"><%= moment(review.createdAt).fromNow() %></span>
                             </p>
-                            <p><%= comment.text %></p>
+                            <p><%= review.text %></p>
                             <!-- show these buttons only if the user is logged in and owns the campground -->
-                            <% if (currentUser && (comment.author.id.equals(currentUser._id))) { %>
-                            <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="d-inline">
+                            <% if (currentUser && (review.author.id.equals(currentUser._id))) { %>
+                            <a href="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="d-inline">
                                 <button class="btn btn-sm btn-danger font-weight-bold">Delete</button>
                             </form>
                             <% } %>

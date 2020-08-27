@@ -4,7 +4,7 @@ const router = express.Router();
 
 // require relevant models
 const Campground = require("../models/campground");
-const Comment = require('../models/comment');
+const Review = require('../models/review');
 
 // require the middleware index.js file
 const middleware = require("../middleware");
@@ -97,7 +97,7 @@ router.post("/", middleware.isLoggedIn,(req, res) => {
 // SHOW route - show more info about a specific campground
 router.get("/:id", (req, res) => {
 	// find the campground with provided id
-	Campground.findById(req.params.id).populate("comments").exec((error, foundCampground) => {
+	Campground.findById(req.params.id).populate("reviews").exec((error, foundCampground) => {
 		if(error || !foundCampground) {
 			req.flash("error", "Campground not found")
 			res.redirect("/campgrounds");
@@ -144,13 +144,13 @@ router.put("/:id", middleware.isTheCampgroundOwner, (req, res) => {
 	});
 });
 
-// DESTROY route - will delete a specific campground and its associated comments
+// DESTROY route - will delete a specific campground and its associated reviews
 router.delete("/:id", middleware.isTheCampgroundOwner, async (req, res) => {
 	try {
 		// use mongoose's built in method of finding an item
 		let removedCampground = await Campground.findById(req.params.id);
-		// remove the campground's associated comments
-		await Comment.deleteMany({_id: { $in: removedCampground.comments }})
+		// remove the campground's associated reviews
+		await Review.deleteMany({_id: { $in: removedCampground.reviews }})
 		// remove the campground
 		await removedCampground.remove();
 		res.redirect("/campgrounds");

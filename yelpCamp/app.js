@@ -15,7 +15,7 @@ app.locals.moment = require('moment');
 
 // require routes
 const campgroundRoutes = require("./routes/campgrounds");
-const commentRoutes = require("./routes/comments");
+const reviewRoutes = require("./routes/reviews");
 const indexRoutes = require("./routes/index");
 
 // require models
@@ -74,7 +74,7 @@ app.use((req, res, next) => {
 // we can add a prefix to any route file which will be added to all the routes in that file
 app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
+app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 // set a port for the server to start on
 app.listen(3000, () => {

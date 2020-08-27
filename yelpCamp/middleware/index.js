@@ -2,7 +2,7 @@
 
 // import relevant models
 const Campground = require("../models/campground");
-const Comment = require("../models/comment");
+const Review = require("../models/review");
 
 // define a middleware object and add methods to it
 const middlewareObj = {};
@@ -43,23 +43,23 @@ middlewareObj.isTheCampgroundOwner = (req, res, next) => {
 	}
 }
 
-// a middleware to check if the user is logged in and own the comment they are trying to edit/delete
-middlewareObj.isTheCommentOwner = (req, res, next) => {
+// a middleware to check if the user is logged in and own the review they are trying to edit/delete
+middlewareObj.isTheReviewOwner = (req, res, next) => {
 	// check that the use is logged in
 	if (req.isAuthenticated()) {
-		// find the comment with provided id and store in a variable
-		Comment.findById(req.params.comment_id, (error, foundComment) => {
-			// check that the comment exists
-			if (error || !foundComment) {
-				req.flash("error", "Comment not found");
+		// find the review with provided id and store in a variable
+		Review.findById(req.params.review_id, (error, foundReview) => {
+			// check that the review exists
+			if (error || !foundReview) {
+				req.flash("error", "Review not found");
 				res.redirect(`/campgrounds/${req.params.id}`);
 			} else {
-				// check if the user who is trying to edit the comment also owns it
+				// check if the user who is trying to edit the review also owns it
 				// using the mongoose method ".equals"
-				if (foundComment.author.id.equals(req.user._id)) {
+				if (foundReview.author.id.equals(req.user._id)) {
 					next();
 				} else {
-					req.flash("error", "You are not the owner of this comment");
+					req.flash("error", "You are not the owner of this review");
 					res.redirect(`/campgrounds/${req.params.id}`);
 				}
 			}

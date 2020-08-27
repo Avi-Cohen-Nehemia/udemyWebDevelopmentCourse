@@ -1,13 +1,13 @@
 <%- include("../partials/header") %>
 
 <div class="container">
-    <h1 class="text-center mb-3">Edit Comment for <%= campground.name %></h1>
+    <h1 class="text-center mb-3">Edit Review for <%= campground.name %></h1>
 
-    <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" method="POST" class="form-group">
+    <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=PUT" method="POST" class="form-group">
         <div class="row">
             <div class="form-group col-md-6 mx-auto">
-                <label for="comment[text]">Comment</label>
-                <input type="text" value="<%= comment.text %>" name="comment[text]" class="form-control">
+                <label for="review[text]">Review</label>
+                <input type="text" value="<%= review.text %>" name="review[text]" class="form-control">
             </div>
         </div>
         <div class="row">

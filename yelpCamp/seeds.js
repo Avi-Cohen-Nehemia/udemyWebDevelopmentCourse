@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Campground = require("./models/campground");
-var Comment = require("./models/comment");
+var Review = require("./models/review");
  
 var seedCampgrounds = [
     {
@@ -61,14 +61,14 @@ const seedDB = async () => {
         await Campground.deleteMany({});
         console.log("campgrounds removed");
 
-        // Remove all comments
-        await Comment.deleteMany({});
-        console.log("comments removed");
+        // Remove all reviews
+        await Review.deleteMany({});
+        console.log("reviews removed");
 
         // seed the data array defined at the top of the file
         seedCampgrounds.forEach( async (campground) => {
             let newCampground = await Campground.create(campground);
-            let newComment = await Comment.create(
+            let newReview = await Review.create(
                 {
                     text: "This place is great, but I wish there was internet",
                     author: {
@@ -77,7 +77,7 @@ const seedDB = async () => {
                     }
                 }
             );
-            newCampground.comments.push(newComment);
+            newCampground.reviews.push(newReview);
             newCampground.save();
         });
         console.log("data seeded")
