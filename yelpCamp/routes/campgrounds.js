@@ -97,7 +97,12 @@ router.post("/", middleware.isLoggedIn,(req, res) => {
 // SHOW route - show more info about a specific campground
 router.get("/:id", (req, res) => {
 	// find the campground with provided id
-	Campground.findById(req.params.id).populate("reviews").exec((error, foundCampground) => {
+	Campground.findById(req.params.id)
+		.populate({
+			path: "reviews",
+			options: {sort: {createdAt: -1}}
+		})
+		.exec((error, foundCampground) => {
 		if(error || !foundCampground) {
 			req.flash("error", "Campground not found")
 			res.redirect("/campgrounds");
@@ -131,14 +136,15 @@ router.put("/:id", middleware.isTheCampgroundOwner, (req, res) => {
 		req.body.campground.lat = data[0].latitude;
 		req.body.campground.lng = data[0].longitude;
 		req.body.campground.location = data[0].formattedAddress;
-  
-	  	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (error, campground) => {
+		
+		delete req.body.campground.rating;
+	  	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (error, updatedCampground) => {
 			if(error){
 				req.flash("error", error.message);
 				res.redirect("back");
 			} else {
 				req.flash("success","Campground updated successfuly!");
-				res.redirect("/campgrounds/" + campground._id);
+				res.redirect(`/campgrounds/${updatedCampground._id}`);
 			}
 	  	});
 	});
@@ -153,6 +159,7 @@ router.delete("/:id", middleware.isTheCampgroundOwner, async (req, res) => {
 		await Review.deleteMany({_id: { $in: removedCampground.reviews }})
 		// remove the campground
 		await removedCampground.remove();
+		req.flash("success", "Campground deleted successfully!");
 		res.redirect("/campgrounds");
 	} catch (error) {
 		console.log(error);

@@ -26,6 +26,10 @@ const CampgroundSchema = new mongoose.Schema({
             ref: "Review",
         }
     ],
+    rating: {
+        type: Number,
+        default: 0
+    }
 });
 
 // define and export new object using the schema created above

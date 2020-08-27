@@ -1,8 +1,20 @@
-var mongoose = require("mongoose");
-var Campground = require("./models/campground");
-var Review = require("./models/review");
+const mongoose = require("mongoose");
+const Campground = require("./models/campground");
+const Review = require("./models/review");
+
+// function to calculate the reviews average of a specific campground
+const calculateAverage = (reviews) => {
+    if (reviews.length === 0) {
+        return 0;
+    }
+    var sum = 0;
+    reviews.forEach(function (element) {
+        sum += element.rating;
+    });
+    return sum / reviews.length;
+}
  
-var seedCampgrounds = [
+let seedCampgrounds = [
     {
         name: "Salmon Creek",
         price: "12.00",
@@ -74,10 +86,12 @@ const seedDB = async () => {
                     author: {
                         id : "588c2e092403d111454fff76",
                         username: "Jack"
-                    }
+                    },
+                    rating: 4
                 }
             );
             newCampground.reviews.push(newReview);
+            newCampground.rating = calculateAverage(newCampground.reviews);
             newCampground.save();
         });
         console.log("data seeded")
