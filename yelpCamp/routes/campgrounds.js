@@ -30,22 +30,25 @@ const escapeRegex = (text) => {
 router.get("/", (req, res) => {
 	let perPage = 8;
     let pageQuery = parseInt(req.query.page);
-    let pageNumber = pageQuery ? pageQuery : 1;
+	let pageNumber = pageQuery ? pageQuery : 1;
+	let noMatch = null;
 	if (req.query.search) {
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-		Campground.find({name: regex}).skip((perPage * pageNumber) - perPage).limit(perPage).exec((error, allCampgrounds) => {
+		Campground.find({name: regex}).skip((perPage * pageNumber) - perPage).limit(perPage).exec((error, filteredCampgrounds) => {
 			Campground.countDocuments().exec((error, count) => {
 				if (error) {
 					console.log(error);
 				} else {
-					if (allCampgrounds.length === 0) {
+					if (filteredCampgrounds.length === 0) {
 						req.flash('error', 'No Campgrounds found');
 						return res.redirect('back');
 					} else {
 						res.render("campgrounds/index", {
-							campgrounds: allCampgrounds,
+							campgrounds: filteredCampgrounds,
 							current: pageNumber,
-							pages: Math.ceil(count / perPage)
+							pages: Math.ceil(count / perPage),
+							noMatch: noMatch,
+                        	search: req.query.search
 						});
 					}	
 				}
@@ -60,7 +63,9 @@ router.get("/", (req, res) => {
 					res.render("campgrounds/index", {
 						campgrounds: allCampgrounds,
 						current: pageNumber,
-						pages: Math.ceil(count / perPage)
+						pages: Math.ceil(count / perPage),
+						noMatch: noMatch,
+                        search: false
 					});
 				}
 			});
