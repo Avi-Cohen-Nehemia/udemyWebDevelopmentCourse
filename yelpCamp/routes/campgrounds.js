@@ -28,28 +28,43 @@ const escapeRegex = (text) => {
 // ==========================
 // INDEX route - show all campgrounds
 router.get("/", (req, res) => {
+	let perPage = 8;
+    let pageQuery = parseInt(req.query.page);
+    let pageNumber = pageQuery ? pageQuery : 1;
 	if (req.query.search) {
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-		Campground.find({name: regex}, (error, allCampgrounds) => {
-			if (error) {
-				console.log(error);
-			} else {
-				if (allCampgrounds.length === 0) {
-					req.flash('error', 'No Campgrounds found');
-					return res.redirect('back');
+		Campground.find({name: regex}).skip((perPage * pageNumber) - perPage).limit(perPage).exec((error, allCampgrounds) => {
+			Campground.countDocuments().exec((error, count) => {
+				if (error) {
+					console.log(error);
 				} else {
-					res.render("campgrounds/index", {campgrounds: allCampgrounds});
-				}	
-			}
-		});
+					if (allCampgrounds.length === 0) {
+						req.flash('error', 'No Campgrounds found');
+						return res.redirect('back');
+					} else {
+						res.render("campgrounds/index", {
+							campgrounds: allCampgrounds,
+							current: pageNumber,
+							pages: Math.ceil(count / perPage)
+						});
+					}	
+				}
+			});
+		});	
 	} else {
-		Campground.find({}, (error, allCampgrounds) => {
-			if (error) {
-				console.log(error);
-			} else {
-				res.render("campgrounds/index", {campgrounds: allCampgrounds});
-			}
-		});
+		Campground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec((error, allCampgrounds) => {
+			Campground.countDocuments().exec((error, count) => {
+				if (error) {
+					console.log(error);
+				} else {
+					res.render("campgrounds/index", {
+						campgrounds: allCampgrounds,
+						current: pageNumber,
+						pages: Math.ceil(count / perPage)
+					});
+				}
+			});
+		});	
 	}
 });
 
