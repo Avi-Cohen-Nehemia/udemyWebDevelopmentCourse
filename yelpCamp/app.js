@@ -77,6 +77,7 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 // set a port for the server to start on
-app.listen(3000, () => {
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
     console.log("Yelp Camp app started on port 3000");
 });
